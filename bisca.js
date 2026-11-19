@@ -2,7 +2,7 @@
 
 /* =====================================================================
    Bisca dos Três — motor do jogo (2 jogadores)
-   Jogador 0 = tu, jogador 1 = computador.
+   Jogador 0 = tu (Noah), jogador 1 = computador (Duarte).
    ===================================================================== */
 
 const { NOME_NAIPE, forca, pontos, idCarta, nomeCarta, baralhar, elCarta, darCartas } =
@@ -189,7 +189,7 @@ if (typeof document !== 'undefined') (() => {
   const ESPERA_IA = 800;
   const ESPERA_VAZA = 1100;
   const ESPERA_RECOLHA = 420;
-  const NOMES = ['Tu', 'Computador'];
+  const NOMES = ['Noah', 'Duarte'];
 
   let epoca = 0; // invalida temporizadores quando se recomeça
   const depois = (ms, fn) => {
@@ -278,9 +278,9 @@ if (typeof document !== 'undefined') (() => {
     let estado = '';
     if (B.vez === 0) {
       estado = B.vaza.length ? 'É a tua vez' : 'É a tua vez — sais tu';
-    } else if (B.vez === 1) estado = 'Joga o computador…';
+    } else if (B.vez === 1) estado = 'Joga o Duarte…';
     else if (B.vaza.length === 2) {
-      estado = vencedorVaza(B.vaza) === 0 ? 'Ganhaste a vaza' : 'O computador ganhou a vaza';
+      estado = vencedorVaza(B.vaza) === 0 ? 'Ganhaste a vaza' : 'O Duarte ganhou a vaza';
     }
     $('estado').textContent = estado;
 
@@ -324,12 +324,12 @@ if (typeof document !== 'undefined') (() => {
     let estado = r.vencedor < 0 ? 'empate' : r.vencedor === 0 ? 'vitoria' : 'derrota';
     if (fimDeJogo) {
       const campeao = B.jogos[0] > B.jogos[1];
-      titulo = campeao ? 'Vitória! O jogo é teu!' : 'Derrota — o computador ganhou o jogo';
+      titulo = campeao ? 'Vitória! O jogo é teu!' : 'Derrota — o Duarte ganhou o jogo';
       estado = campeao ? 'campeao' : 'eliminado';
     }
     const texto = r.vencedor < 0
       ? 'Empate a 60 pontos — ninguém marca.'
-      : `Mais de 60 pontos: 1 jogo para ${r.vencedor === 0 ? 'ti' : 'o computador'}.`;
+      : `Mais de 60 pontos: 1 jogo para ${r.vencedor === 0 ? 'ti' : 'o Duarte'}.`;
 
     $('jogos-0').textContent = B.jogos[0];
     $('jogos-1').textContent = B.jogos[1];
@@ -341,7 +341,7 @@ if (typeof document !== 'undefined') (() => {
       titulo,
       texto,
       pontos: r.pontos,
-      nomes: ['Tu', 'Computador'],
+      nomes: NOMES,
       jogos: B.jogos,
       novos: [r.vencedor === 0 ? 1 : 0, r.vencedor === 1 ? 1 : 0],
       meta: JOGOS_PARA_GANHAR,
@@ -392,7 +392,7 @@ if (typeof document !== 'undefined') (() => {
     }));
     const pts = u.cartas.reduce((t, j) => t + pontos(j.carta), 0);
     $('ultima-texto').textContent =
-      `${u.vencedor === 0 ? 'Ganhaste' : 'O computador ganhou'} · ${pts} ${pts === 1 ? 'ponto' : 'pontos'}`;
+      `${u.vencedor === 0 ? 'Ganhaste' : 'O Duarte ganhou'} · ${pts} ${pts === 1 ? 'ponto' : 'pontos'}`;
     $('dlg-ultima').showModal();
   });
 

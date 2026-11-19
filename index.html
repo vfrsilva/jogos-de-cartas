@@ -25,7 +25,7 @@
     <span class="info">
       <h2>Sueca</h2>
       <span class="chips"><i>4 jogadores</i><i>2 equipas</i><i>trunfo</i></span>
-      <p>Jogas com a Maria contra o Zé e o António. Ganha quem passar dos 60 pontos.</p>
+      <p>Jogas com o Tomas contra o Duarte e a Sira. Ganha quem passar dos 60 pontos.</p>
       <span class="guardado" id="res-sueca"></span>
       <span class="jogar">Jogar ›</span>
     </span>
@@ -40,7 +40,7 @@
     <span class="info">
       <h2>Bisca dos Três</h2>
       <span class="chips"><i>2 jogadores</i><i>3 cartas na mão</i><i>trunfo</i></span>
-      <p>Tu contra o computador, com um baralho para ir comprando cartas.</p>
+      <p>Tu contra o Duarte, com um baralho para ir comprando cartas.</p>
       <span class="guardado" id="res-bisca"></span>
       <span class="jogar">Jogar ›</span>
     </span>
@@ -68,7 +68,7 @@
   // Mostra o resultado guardado de cada jogo, se houver um a decorrer.
   const guardado = (chave) => { try { return JSON.parse(localStorage.getItem(chave)); } catch { return null; } };
   const mostrar = (id, texto) => { document.getElementById(id).textContent = `A decorrer: ${texto}`; };
-  for (const [chave, id, a, b] of [['sueca-v1', 'res-sueca', 'Nós', 'Eles'], ['bisca-v1', 'res-bisca', 'Tu', 'PC']]) {
+  for (const [chave, id, a, b] of [['sueca-v1', 'res-sueca', 'Nós', 'Eles'], ['bisca-v1', 'res-bisca', 'Noah', 'Duarte']]) {
     const d = guardado(chave);
     if (d && Array.isArray(d.jogos) && d.jogos[0] + d.jogos[1] > 0) mostrar(id, `${a} ${d.jogos[0] | 0} – ${d.jogos[1] | 0} ${b}`);
   }

@@ -11,7 +11,7 @@ const { idCarta, nomeCarta, baralhar, elCarta, darCartas } =
 
 const ORDEM = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace'];
 const LIMITE = 100;
-const JOGADORES = ['Tu', 'Zé', 'Maria', 'António'];
+const JOGADORES = ['Noah', 'Duarte', 'Tomas', 'Sira'];
 // Sentido do passe em cada ronda: d é o deslocamento até ao lugar de destino.
 const PASSES = [
   { d: 3, nome: 'à esquerda' },
@@ -222,7 +222,7 @@ if (typeof document !== 'undefined') (() => {
   const ESPERA_VAZA = 1100;
   const ESPERA_RECOLHA = 420;
   const ORDEM_NAIPES = ['clubs', 'diamonds', 'spades', 'hearts'];
-  const artigo = (p) => (p === 2 ? 'a' : 'o');
+  const artigo = (p) => (p === 3 ? 'a' : 'o');
 
   let escolhidas = []; // cartas marcadas para passar
   let epoca = 0; // invalida temporizadores quando se recomeça
@@ -328,7 +328,7 @@ if (typeof document !== 'undefined') (() => {
     if (C.fase === 'passar') {
       const destino = passe.d % 4;
       if (escolhidas.length === 3) return 'Confirma o passe, ou toca numa carta do quadro para a trocar';
-      return `Escolhe 3 cartas para passar ${destino === 2 ? 'à' : 'ao'} ${JOGADORES[destino]} (${passe.nome})`;
+      return `Escolhe 3 cartas para passar ${destino === 3 ? 'à' : 'ao'} ${JOGADORES[destino]} (${passe.nome})`;
     }
     if (C.vez === 0) {
       if (C.primeira && !C.vaza.length) return 'Sais tu, com o 2 de paus';

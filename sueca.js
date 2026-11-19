@@ -11,7 +11,7 @@ const { NAIPES, VALORES, NOME_NAIPE, forca, pontos, idCarta, nomeCarta, baralhar
   typeof require !== 'undefined' ? require('./cartas.js') : Cartas;
 
 const JOGOS_PARA_GANHAR = 4;
-const JOGADORES = ['Tu', 'Zé', 'Maria', 'António'];
+const JOGADORES = ['Noah', 'Duarte', 'Tomas', 'Sira'];
 const equipa = (p) => p % 2;
 
 const G = {
@@ -271,7 +271,7 @@ if (typeof document !== 'undefined') (() => {
       lugar.classList.toggle('ativo', G.vez === p);
       if (p === 0) continue;
       const dador = G.dador === p ? ' <small>· deu</small>' : '';
-      const papel = p === 2 ? ' <small>(parceira)</small>' : '';
+      const papel = p === 2 ? ' <small>(parceiro)</small>' : '';
       lugar.querySelector('.nome').innerHTML = JOGADORES[p] + papel + dador;
       const costas = lugar.querySelector('.costas');
       costas.classList.toggle('vazio', !G.maos[p].length);
@@ -289,7 +289,7 @@ if (typeof document !== 'undefined') (() => {
 
     let estado = '';
     if (G.vez === 0) estado = G.vaza.length ? 'É a tua vez' : 'É a tua vez — sais tu';
-    else if (G.vez > 0) estado = `Joga ${G.vez === 2 ? 'a' : 'o'} ${JOGADORES[G.vez]}…`;
+    else if (G.vez > 0) estado = `Joga ${G.vez === 3 ? 'a' : 'o'} ${JOGADORES[G.vez]}…`;
     else if (G.vaza.length === 4) {
       const v = vencedorVaza(G.vaza).p;
       estado = v === 0 ? 'Ganhaste a vaza' : `${JOGADORES[v]} ganhou a vaza`;
