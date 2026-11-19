@@ -37,10 +37,12 @@ body {
   color: var(--texto);
   font: 15px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
   user-select: none;
 }
 
 button { font: inherit; color: inherit; cursor: pointer; }
+.t-curto { display: none; } /* textos curtos dos botões, só em ecrãs estreitos */
 button:focus-visible, a:focus-visible { outline: 3px solid var(--ouro); outline-offset: 2px; }
 
 /* ---------- Painéis de vidro (o mesmo estilo dos ecrãs de fim de partida) ---------- */
@@ -265,12 +267,19 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--ouro); outline-
 }
 .mao .carta:first-child { margin-left: 0; }
 .mao .carta.jogavel { cursor: pointer; transform: translateY(-5%); z-index: 1; }
-.mao .carta.jogavel:hover,
 .mao .carta.jogavel:focus-visible {
   transform: translateY(-16%);
   z-index: 2;
   box-shadow: 0 0 0 2px var(--ouro), 0 0 22px rgba(242, 201, 76, .55), 0 14px 24px rgba(0, 0, 0, .45);
 }
+@media (hover: hover) {
+  .mao .carta.jogavel:hover {
+    transform: translateY(-16%);
+    z-index: 2;
+    box-shadow: 0 0 0 2px var(--ouro), 0 0 22px rgba(242, 201, 76, .55), 0 14px 24px rgba(0, 0, 0, .45);
+  }
+}
+.mao .carta.jogavel:active { transform: translateY(-10%) scale(.97); }
 .mao .carta.proibida { filter: brightness(.5) saturate(.6); }
 .mao .carta.recebida { box-shadow: 0 0 0 3px var(--nos), 0 0 20px rgba(127, 209, 255, .6), 0 6px 14px rgba(0, 0, 0, .4); }
 .mao .carta.nova { animation: compra .35s ease-out; }
@@ -405,7 +414,10 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--ouro); outline-
   transition: transform .14s, box-shadow .14s;
   box-shadow: 0 0 0 2px var(--ouro), 0 0 18px rgba(242, 201, 76, .45), 0 6px 14px rgba(0, 0, 0, .4);
 }
+.passe-slot .carta:active { transform: scale(.94); }
+@media (hover: hover) {
 .passe-slot .carta:hover { transform: translateY(6%) scale(.96); box-shadow: 0 0 0 2px var(--perigo), 0 6px 14px rgba(0, 0, 0, .4); }
+}
 
 /* ---------- Botão principal ---------- */
 .principal {
@@ -683,26 +695,108 @@ body.painel {
 }
 .rodape { margin-top: 32px; text-align: center; font-size: 12px; color: var(--texto-suave); }
 
-/* ---------- Ecrãs estreitos ---------- */
+/* ---------- Telemóvel ---------- */
 @media (max-width: 620px) {
-  .barra { padding: 7px 12px; }
-  .barra h1 { font-size: 18px; }
-  .marca { gap: 8px; }
-  .voltar, .acoes button { padding: 4px 9px; font-size: 12px; }
-  .trunfo { padding: 6px 8px; }
-  .trunfo .carta.mini { --cw: 54px; }
-  .trunfo .detalhe { display: none; }
-  .copas .trunfo .detalhe { display: block; font-size: 12px; }
+  :root { --cw: clamp(44px, min(17vw, (100dvh - 320px) * 0.19), 84px); }
+  .t-longo { display: none; }
+  .t-curto { display: inline; }
+
+  /* Barra numa só linha, com botões fáceis de tocar. */
+  .barra { flex-wrap: nowrap; gap: 8px; padding: 7px 10px; }
+  .marca { gap: 8px; min-width: 0; }
+  .barra h1 { font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .voltar, .acoes button { padding: 7px 12px; font-size: 13px; }
+  .acoes { flex: none; gap: 5px; }
+
+  .mesa { gap: 4px; padding: 8px 10px 0; }
+  .lugar { gap: 6px; }
   .lugar.topo { grid-column: 1 / 3; }
-  .passe { padding: 10px 12px 12px; gap: 9px; }
-  .placar { gap: 6px 10px; padding: 7px 14px 9px; }
-  .equipa { gap: 7px; }
-  .equipa .rotulo { font-size: 12px; }
-  .equipa .pontos { font-size: 28px; }
-  .equipa .pontos small { font-size: 12px; }
+  .nome { padding: 3px 10px; font-size: 13px; }
+  .costas:not(.grande) { width: calc(var(--cw) * 0.46); height: calc(var(--ch) * 0.46); }
+  .vaza { width: calc(var(--cw) * 3.1); height: calc(var(--ch) * 1.8); }
+  .vaza::before { inset: calc(var(--ch) * -0.18) calc(var(--cw) * -0.7); }
+  .trunfo { gap: 4px; padding: 6px 8px; border-radius: 12px; font-size: 12px; }
+  .trunfo .rotulo { font-size: 11px; }
+  .trunfo .carta.mini { --cw: 44px; }
+  .trunfo .detalhe { display: none; }
+  .copas .trunfo .detalhe { display: block; }
+  .coracao { font-size: 34px; }
+  .passe { gap: 8px; padding: 8px 10px 10px; }
+  .passe .rotulo { display: none; } /* o destinatário já aparece no estado e no botão */
+  /* Bisca: só 3 cartas na mão, por isso podem ser maiores. */
+  body.bisca { --cw: clamp(44px, min(19vw, (100dvh - 320px) * 0.23), 90px); }
+  .baralho { margin-right: calc(var(--cw) * 0.1); }
+  .passe .principal { padding: 8px 18px; }
+
+  /* Mão: cartas maiores; com mais de 6 cartas passa a duas filas. */
+  .eu { padding: 0 12px 8px; }
+  .estado { margin: 4px 0 6px; font-size: 13px; }
+  .mao {
+    --cols: 7;
+    --passo: min(var(--cw) * 0.94, (100vw - 24px - var(--cw)) / max(1, var(--cols) - 1));
+    display: grid;
+    grid-template-columns: repeat(var(--cols), var(--passo));
+    justify-content: center;
+    row-gap: calc(var(--ch) * -0.36);
+    min-height: 0;
+    padding-right: max(0px, var(--cw) - var(--passo));
+  }
+  .mao:has(> :last-child:nth-child(1)) { --cols: 1; }
+  .mao:has(> :last-child:nth-child(2)) { --cols: 2; }
+  .mao:has(> :last-child:nth-child(3)) { --cols: 3; }
+  .mao:has(> :last-child:nth-child(4)) { --cols: 4; }
+  .mao:has(> :last-child:nth-child(5)) { --cols: 5; }
+  .mao:has(> :last-child:nth-child(6)) { --cols: 6; }
+  .mao:has(> :last-child:nth-child(7)) { --cols: 4; }
+  .mao:has(> :last-child:nth-child(8)) { --cols: 4; }
+  .mao:has(> :last-child:nth-child(9)) { --cols: 5; }
+  .mao:has(> :last-child:nth-child(10)) { --cols: 5; }
+  .mao:has(> :last-child:nth-child(11)) { --cols: 6; }
+  .mao:has(> :last-child:nth-child(12)) { --cols: 6; }
+  .mao:has(> :last-child:nth-child(13)) { --cols: 7; }
+  .mao .carta { margin-left: 0; }
+  /* Sem z-index: uma carta da fila de cima nunca deve tapar a fila de baixo. */
+  .mao .carta.jogavel, .mao .carta.jogavel:focus-visible { z-index: auto; }
+
+  .placar { gap: 5px 8px; padding: 6px 12px 8px; margin-bottom: max(8px, env(safe-area-inset-bottom)); }
+  .equipa { gap: 6px; }
+  .equipa .rotulo { font-size: 11px; letter-spacing: .06em; }
+  .equipa .pontos { font-size: 26px; }
+  .equipa .pontos small { margin-left: 2px; font-size: 11px; }
+  .equipa .jogos { padding: 1px 8px; font-size: 12px; }
   .equipa .jogos::before { content: ""; }
-  .placar.quatro { gap: 6px 14px; padding: 7px 16px; }
-  .jog .total { font-size: 26px; }
+  .placar > .sep { font-size: 18px; }
+  .placar.quatro { gap: 6px 16px; padding: 6px 16px; }
+  .jog { min-width: 50px; }
+  .jog .rotulo { font-size: 11px; }
+  .jog .total { font-size: 24px; }
+  .jog .ronda { font-size: 12px; }
+
+  dialog { padding: 18px; }
+  .fim-corpo { padding: 22px 16px 20px; }
+  .fim-icone { font-size: 58px; }
+  .campeao .fim-icone { font-size: 72px; }
+  dialog.fim h2 { font-size: 24px; }
+  .fim-placar .num { font-size: 38px; }
+  .fim-placar .maior .num { font-size: 54px; }
+  .linha { grid-template-columns: 4.6em 2.4em 1fr 2.2em; padding: 6px 10px; }
+
+  /* Painel: cartões compactos, lado a lado com o leque, para caberem os três no ecrã. */
+  body.painel { padding: 0 12px 20px; }
+  .capa { padding: 22px 0 18px; }
+  .capa .naipes { font-size: 16px; }
+  .capa p { font-size: 14px; }
+  .jogos-lista { gap: 12px; }
+  .jogo { --cw: 50px; flex-direction: row; gap: 14px; padding: 16px 14px; border-radius: 16px; }
+  .leque { flex: none; }
+  .info { align-items: flex-start; gap: 6px; text-align: left; }
+  .info h2 { font-size: 21px; }
+  .info p { font-size: 13px; }
+  .chips { justify-content: flex-start; gap: 4px; }
+  .chips i { padding: 1px 8px; font-size: 11px; }
+  .guardado:empty { display: none; }
+  .jogar { padding: 6px 18px; font-size: 14px; }
+  .rodape { margin-top: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

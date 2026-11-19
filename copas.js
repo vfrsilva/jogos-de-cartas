@@ -320,19 +320,21 @@ if (typeof document !== 'undefined') (() => {
     });
     const btn = $('btn-passar');
     btn.disabled = escolhidas.length !== 3;
-    btn.textContent = escolhidas.length === 3 ? 'Passar as 3 cartas' : `Escolhidas: ${escolhidas.length} de 3`;
+    btn.textContent = escolhidas.length === 3
+      ? `Passar ${destino === 3 ? 'à' : 'ao'} ${JOGADORES[destino]}`
+      : `Escolhidas: ${escolhidas.length} de 3`;
   }
 
   function textoEstado() {
     const passe = passeAtual();
     if (C.fase === 'passar') {
       const destino = passe.d % 4;
-      if (escolhidas.length === 3) return 'Confirma o passe, ou toca numa carta do quadro para a trocar';
+      if (escolhidas.length === 3) return 'Confirma, ou toca numa carta para a trocar';
       return `Escolhe 3 cartas para passar ${destino === 3 ? 'à' : 'ao'} ${JOGADORES[destino]} (${passe.nome})`;
     }
     if (C.vez === 0) {
       if (C.primeira && !C.vaza.length) return 'Sais tu, com o 2 de paus';
-      if (C.recebidas.length) return 'É a tua vez — as cartas com contorno azul são as que recebeste';
+      if (C.recebidas.length) return 'É a tua vez — a azul, as cartas que recebeste';
       return C.vaza.length ? 'É a tua vez' : 'É a tua vez — sais tu';
     }
     if (C.vez > 0) return `Joga ${artigo(C.vez)} ${JOGADORES[C.vez]}…`;
