@@ -1,0 +1,2 @@
+Imagens das cartas: "Vector Playing Cards" de Byron Knoll (dominio publico),
+obtidas de https://github.com/hayeah/playing-cards-assets

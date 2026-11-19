@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06170f">
+<title>Jogos de Cartas</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="painel">
+
+<header class="capa">
+  <div class="naipes" aria-hidden="true">♠<b>♥</b>♣<b>♦</b></div>
+  <h1>Jogos de Cartas</h1>
+  <p>Escolhe um jogo para começar.</p>
+</header>
+
+<main class="jogos-lista">
+  <a class="jogo sueca-t" href="sueca.html">
+    <span class="leque" aria-hidden="true">
+      <span class="carta"><img src="cartas/king_of_hearts.svg" alt=""></span>
+      <span class="carta"><img src="cartas/7_of_hearts.svg" alt=""></span>
+      <span class="carta"><img src="cartas/ace_of_hearts.svg" alt=""></span>
+    </span>
+    <span class="info">
+      <h2>Sueca</h2>
+      <span class="chips"><i>4 jogadores</i><i>2 equipas</i><i>trunfo</i></span>
+      <p>Jogas com a Maria contra o Zé e o António. Ganha quem passar dos 60 pontos.</p>
+      <span class="guardado" id="res-sueca"></span>
+      <span class="jogar">Jogar ›</span>
+    </span>
+  </a>
+
+  <a class="jogo bisca-t" href="bisca.html">
+    <span class="leque" aria-hidden="true">
+      <span class="carta"><img src="cartas/jack_of_spades.svg" alt=""></span>
+      <span class="carta"><img src="cartas/7_of_spades.svg" alt=""></span>
+      <span class="carta"><img src="cartas/ace_of_spades.svg" alt=""></span>
+    </span>
+    <span class="info">
+      <h2>Bisca dos Três</h2>
+      <span class="chips"><i>2 jogadores</i><i>3 cartas na mão</i><i>trunfo</i></span>
+      <p>Tu contra o computador, com um baralho para ir comprando cartas.</p>
+      <span class="guardado" id="res-bisca"></span>
+      <span class="jogar">Jogar ›</span>
+    </span>
+  </a>
+
+  <a class="jogo copas-t" href="copas.html">
+    <span class="leque" aria-hidden="true">
+      <span class="carta"><img src="cartas/10_of_hearts.svg" alt=""></span>
+      <span class="carta"><img src="cartas/queen_of_spades.svg" alt=""></span>
+      <span class="carta"><img src="cartas/ace_of_hearts.svg" alt=""></span>
+    </span>
+    <span class="info">
+      <h2>Copas</h2>
+      <span class="chips"><i>4 jogadores</i><i>cada um por si</i><i>52 cartas</i></span>
+      <p>Foge das copas e da Dama de espadas: ganha quem fizer menos pontos.</p>
+      <span class="guardado" id="res-copas"></span>
+      <span class="jogar">Jogar ›</span>
+    </span>
+  </a>
+</main>
+
+<footer class="rodape">Sem anúncios · funciona sem internet · cartas de Byron Knoll (domínio público)</footer>
+
+<script>
+  // Mostra o resultado guardado de cada jogo, se houver um a decorrer.
+  const guardado = (chave) => { try { return JSON.parse(localStorage.getItem(chave)); } catch { return null; } };
+  const mostrar = (id, texto) => { document.getElementById(id).textContent = `A decorrer: ${texto}`; };
+  for (const [chave, id, a, b] of [['sueca-v1', 'res-sueca', 'Nós', 'Eles'], ['bisca-v1', 'res-bisca', 'Tu', 'PC']]) {
+    const d = guardado(chave);
+    if (d && Array.isArray(d.jogos) && d.jogos[0] + d.jogos[1] > 0) mostrar(id, `${a} ${d.jogos[0] | 0} – ${d.jogos[1] | 0} ${b}`);
+  }
+  const copas = guardado('copas-v1');
+  if (copas && Array.isArray(copas.totais) && copas.ronda > 0) mostrar('res-copas', `ronda ${(copas.ronda | 0) + 1} · tens ${copas.totais[0] | 0} pontos`);
+</script>
+</body>
+</html>

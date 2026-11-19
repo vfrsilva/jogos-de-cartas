@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06170f">
+<title>Sueca</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="barra">
+  <div class="marca"><a class="voltar" href="index.html" aria-label="Voltar à lista de jogos">‹ Jogos</a><h1>Sueca</h1></div>
+  <nav class="acoes">
+    <button type="button" id="btn-ultima" disabled>Última vaza</button>
+    <button type="button" id="btn-regras">Regras</button>
+    <button type="button" id="btn-novo">Novo jogo</button>
+  </nav>
+</header>
+
+<main class="mesa">
+  <div class="lugar topo" id="lugar-2">
+    <span class="nome"></span>
+    <span class="costas"><b></b></span>
+  </div>
+  <div class="lugar esquerda" id="lugar-3">
+    <span class="nome"></span>
+    <span class="costas"><b></b></span>
+  </div>
+
+  <div class="vaza" id="vaza" aria-label="Cartas na mesa">
+    <div class="slot s0" id="slot-0"></div>
+    <div class="slot s1" id="slot-1"></div>
+    <div class="slot s2" id="slot-2"></div>
+    <div class="slot s3" id="slot-3"></div>
+  </div>
+
+  <div class="lugar direita" id="lugar-1">
+    <span class="nome"></span>
+    <span class="costas"><b></b></span>
+  </div>
+
+  <aside class="trunfo" aria-label="Trunfo">
+    <span class="rotulo">Trunfo</span>
+    <span class="carta mini" id="trunfo-carta"></span>
+    <span class="detalhe" id="trunfo-detalhe"></span>
+  </aside>
+</main>
+
+<footer class="eu" id="lugar-0">
+  <p class="estado" id="estado" aria-live="polite"></p>
+  <div class="mao" id="mao" aria-label="A tua mão"></div>
+</footer>
+
+<div class="placar" aria-label="Pontuação">
+  <div class="equipa nos">
+    <span class="rotulo">Nós</span>
+    <span class="pontos"><span id="pontos-0">0</span><small>pts</small></span>
+    <span class="jogos" title="Jogos ganhos"><b id="jogos-0">0</b></span>
+  </div>
+  <span class="sep">–</span>
+  <div class="equipa eles">
+    <span class="rotulo">Eles</span>
+    <span class="pontos"><span id="pontos-1">0</span><small>pts</small></span>
+    <span class="jogos" title="Jogos ganhos"><b id="jogos-1">0</b></span>
+  </div>
+  <div class="placar-barra" aria-hidden="true"><span id="barra-0"></span><span id="barra-1"></span><i></i></div>
+</div>
+
+<dialog id="dlg-fim"></dialog>
+
+<dialog id="dlg-ultima">
+  <h2>Última vaza</h2>
+  <div class="ultima" id="ultima-cartas"></div>
+  <p id="ultima-texto"></p>
+  <form method="dialog"><button class="principal">Fechar</button></form>
+</dialog>
+
+<dialog id="dlg-regras">
+  <h2>Regras da Sueca</h2>
+  <ul>
+    <li>Quatro jogadores, duas equipas: tu jogas com a <b>Maria</b> (à tua frente) contra o Zé e o António.</li>
+    <li>Baralho de 40 cartas (sem 8, 9 e 10). Cada jogador recebe 10 cartas e joga-se no sentido contrário ao dos ponteiros do relógio.</li>
+    <li>Ordem das cartas, da mais forte para a mais fraca: <b>Ás, 7, Rei, Valete, Dama</b>, 6, 5, 4, 3, 2.</li>
+    <li>Pontos: Ás 11 · Sete 10 · Rei 4 · Valete 3 · Dama 2. No total há 120 pontos.</li>
+    <li>O trunfo é o naipe da carta mostrada por quem dá. Joga primeiro quem está à direita de quem deu.</li>
+    <li>É obrigatório assistir ao naipe de saída. Quem não tiver esse naipe pode jogar qualquer carta, incluindo trunfo.</li>
+    <li>Ganha a vaza o trunfo mais alto ou, não havendo trunfos, a carta mais alta do naipe de saída.</li>
+    <li>Ganha a partida a equipa com mais de 60 pontos: vale <b>1 jogo</b>; com 91 ou mais (capote) vale <b>2</b>; com todas as vazas (bandeira) vale <b>4</b>. 60–60 é empate.</li>
+    <li>Ganha quem chegar primeiro aos <b>4 jogos</b>.</li>
+  </ul>
+  <p class="creditos">Imagens das cartas: <i>Vector Playing Cards</i> de Byron Knoll, em domínio público.</p>
+  <form method="dialog"><button class="principal">Fechar</button></form>
+</dialog>
+
+<script src="cartas.js"></script>
+<script src="fim.js"></script>
+<script src="sueca.js"></script>
+</body>
+</html>

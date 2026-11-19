@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06170f">
+<title>Bisca dos Três</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="bisca">
+
+<header class="barra">
+  <div class="marca"><a class="voltar" href="index.html" aria-label="Voltar à lista de jogos">‹ Jogos</a><h1>Bisca dos Três</h1></div>
+  <nav class="acoes">
+    <button type="button" id="btn-ultima" disabled>Última vaza</button>
+    <button type="button" id="btn-regras">Regras</button>
+    <button type="button" id="btn-novo">Novo jogo</button>
+  </nav>
+</header>
+
+<main class="mesa">
+  <div class="lugar topo" id="lugar-1">
+    <span class="nome"></span>
+    <span class="costas"><b></b></span>
+  </div>
+
+  <div class="baralho" id="baralho">
+    <span class="carta" id="baralho-trunfo"></span>
+    <span class="costas grande"><b id="baralho-n"></b></span>
+  </div>
+
+  <div class="vaza dupla" id="vaza" aria-label="Cartas na mesa">
+    <div class="slot s0" id="slot-0"></div>
+    <div class="slot s2" id="slot-1"></div>
+  </div>
+
+  <aside class="trunfo" aria-label="Trunfo">
+    <span class="rotulo">Trunfo</span>
+    <span class="carta mini" id="trunfo-carta"></span>
+    <span class="detalhe" id="trunfo-detalhe"></span>
+  </aside>
+</main>
+
+<footer class="eu" id="lugar-0">
+  <p class="estado" id="estado" aria-live="polite"></p>
+  <div class="mao" id="mao" aria-label="A tua mão"></div>
+</footer>
+
+<div class="placar" aria-label="Pontuação">
+  <div class="equipa nos">
+    <span class="rotulo">Tu</span>
+    <span class="pontos"><span id="pontos-0">0</span><small>pts</small></span>
+    <span class="jogos" title="Jogos ganhos"><b id="jogos-0">0</b></span>
+  </div>
+  <span class="sep">–</span>
+  <div class="equipa eles">
+    <span class="rotulo">PC</span>
+    <span class="pontos"><span id="pontos-1">0</span><small>pts</small></span>
+    <span class="jogos" title="Jogos ganhos"><b id="jogos-1">0</b></span>
+  </div>
+  <div class="placar-barra" aria-hidden="true"><span id="barra-0"></span><span id="barra-1"></span><i></i></div>
+</div>
+
+<dialog id="dlg-fim"></dialog>
+
+<dialog id="dlg-ultima">
+  <h2>Última vaza</h2>
+  <div class="ultima" id="ultima-cartas"></div>
+  <p id="ultima-texto"></p>
+  <form method="dialog"><button class="principal">Fechar</button></form>
+</dialog>
+
+<dialog id="dlg-regras">
+  <h2>Regras da Bisca dos Três</h2>
+  <ul>
+    <li>Dois jogadores: tu contra o computador. Baralho de 40 cartas (sem 8, 9 e 10).</li>
+    <li>Cada jogador recebe <b>3 cartas</b>. A carta seguinte fica à vista por baixo do baralho e define o <b>trunfo</b>.</li>
+    <li>Ordem das cartas, da mais forte para a mais fraca: <b>Ás, 7, Rei, Valete, Dama</b>, 6, 5, 4, 3, 2.</li>
+    <li>Pontos: Ás 11 · Sete (bisca) 10 · Rei 4 · Valete 3 · Dama 2. No total há 120 pontos.</li>
+    <li>Sai primeiro quem não deu. <b>Nunca é obrigatório assistir</b>: podes jogar sempre qualquer carta, mesmo depois de o baralho acabar.</li>
+    <li>Ganha a vaza o trunfo ou, sendo as duas cartas do mesmo naipe, a mais alta. Se a segunda carta for de outro naipe que não trunfo, ganha quem saiu.</li>
+    <li>Depois de cada vaza, quem ganhou compra uma carta do baralho, depois compra o outro, e quem ganhou sai. A última carta comprada é a do trunfo.</li>
+    <li>Ganha a partida quem fizer mais de 60 pontos (60–60 é empate). Ganha o jogo quem chegar primeiro às <b>4 partidas</b>.</li>
+  </ul>
+  <p class="creditos">Imagens das cartas: <i>Vector Playing Cards</i> de Byron Knoll, em domínio público.</p>
+  <form method="dialog"><button class="principal">Fechar</button></form>
+</dialog>
+
+<script src="cartas.js"></script>
+<script src="fim.js"></script>
+<script src="bisca.js"></script>
+</body>
+</html>
