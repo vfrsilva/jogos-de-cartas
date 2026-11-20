@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#06170f">
 <title>Peixinho</title>
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 </head>
 <body class="peixinho">
 
@@ -18,29 +18,28 @@
 </header>
 
 <main class="mesa">
-  <div class="lugar esquerda" id="lugar-3">
-    <span class="nome"></span>
-    <span class="costas"><b></b></span>
-  </div>
-  <div class="lugar topo" id="lugar-2">
-    <span class="nome"></span>
-    <span class="costas"><b></b></span>
-  </div>
-  <div class="lugar direita" id="lugar-1">
-    <span class="nome"></span>
+  <div class="lugar topo" id="lugar-1">
+    <span class="nome">Duarte</span>
     <span class="costas"><b></b></span>
   </div>
 
-  <div class="centro">
-    <div class="lago" aria-label="Lago">
-      <span class="costas grande" id="lago-monte"><b id="lago-n"></b></span>
-      <span id="lago-texto">Lago</span>
+  <div class="palco">
+    <!-- O que o Duarte diz -->
+    <div class="balao dele" id="balao-1" aria-live="polite" hidden></div>
+
+    <div class="meio">
+      <button type="button" class="lago" id="lago" disabled>
+        <span class="costas grande" id="lago-monte"><b id="lago-n"></b></span>
+        <span id="lago-texto">Lago</span>
+      </button>
+      <div class="montra" id="montra" aria-live="polite">
+        <div class="montra-cartas" id="montra-cartas"></div>
+        <p class="legenda" id="legenda"></p>
+      </div>
     </div>
-    <ul class="falas" id="falas" aria-live="polite"></ul>
-    <div class="passe pedido" id="pedido" hidden>
-      <span class="rotulo" id="pedido-titulo"></span>
-      <div class="pedido-alvos" id="pedido-alvos"></div>
-    </div>
+
+    <!-- O que tu dizes (ou o botão para responderes) -->
+    <div class="balao meu" id="balao-0" aria-live="polite" hidden></div>
   </div>
 </main>
 
@@ -49,11 +48,20 @@
   <div class="mao" id="mao" aria-label="A tua mão"></div>
 </footer>
 
-<div class="placar quatro" aria-label="Peixinhos feitos">
-  <div class="jog eu"><span class="rotulo">Noah</span><span class="total" id="total-0">0</span><span class="ronda" id="ronda-0">—</span></div>
-  <div class="jog"><span class="rotulo">Duarte</span><span class="total" id="total-1">0</span><span class="ronda" id="ronda-1">—</span></div>
-  <div class="jog"><span class="rotulo">Tomas</span><span class="total" id="total-2">0</span><span class="ronda" id="ronda-2">—</span></div>
-  <div class="jog"><span class="rotulo">Sira</span><span class="total" id="total-3">0</span><span class="ronda" id="ronda-3">—</span></div>
+<div class="placar" aria-label="Peixinhos feitos">
+  <div class="equipa nos">
+    <span class="rotulo">Noah</span>
+    <span class="pontos"><span id="pontos-0">0</span><small>🐟</small></span>
+  </div>
+  <span class="sep">–</span>
+  <div class="equipa eles">
+    <span class="rotulo">Duarte</span>
+    <span class="pontos"><span id="pontos-1">0</span><small>🐟</small></span>
+  </div>
+  <div class="feitos">
+    <span class="fichas nos" id="fichas-0" aria-label="Os teus peixinhos"></span>
+    <span class="fichas eles" id="fichas-1" aria-label="Peixinhos do Duarte"></span>
+  </div>
 </div>
 
 <dialog id="dlg-fim"></dialog>
@@ -61,22 +69,23 @@
 <dialog id="dlg-regras">
   <h2>Regras do Peixinho</h2>
   <ul>
-    <li>Quatro jogadores, cada um por si, com as 52 cartas. Cada um recebe 5 cartas; as restantes ficam no <b>lago</b>.</li>
+    <li>Dois jogadores: tu (Noah) contra o Duarte, com as 52 cartas. Cada um recebe 7 cartas; as restantes ficam no <b>lago</b>.</li>
     <li>O objetivo é juntar <b>peixinhos</b>: as 4 cartas do mesmo valor (os 4 Reis, os 4 Setes…).</li>
-    <li>Na tua vez, escolhe um valor que tenhas na mão e pede-o a um adversário.</li>
-    <li>Se ele tiver cartas desse valor, <b>dá-tas todas</b> e jogas outra vez.</li>
-    <li>Se não tiver, <b>vais ao peixinho</b>: pescas uma carta do lago. Se for do valor que pediste, jogas outra vez; senão, passa a vez ao jogador seguinte.</li>
+    <li>Na tua vez, toca numa carta da tua mão para pedir ao Duarte as cartas desse valor.</li>
+    <li>Se ele tiver, <b>dá-tas todas</b> e jogas outra vez.</li>
+    <li>Se não tiver, <b>vais ao peixinho</b>: tocas no lago para pescar uma carta. Se sair o valor que pediste, jogas outra vez; senão, joga o Duarte.</li>
+    <li>Quando o Duarte te pede cartas, tens de responder: dás-lhe as que tiveres desse valor ou manda-lo ao peixinho.</li>
     <li>Quando juntas as 4 cartas de um valor, o peixinho fica feito e sai da tua mão.</li>
-    <li>Quem ficar sem cartas pesca uma do lago na sua vez. Com o lago vazio, quem não tiver cartas deixa de jogar.</li>
+    <li>Quem ficar sem cartas pesca uma do lago na sua vez.</li>
     <li>O jogo acaba quando os 13 peixinhos estiverem feitos. Ganha quem tiver <b>mais peixinhos</b>.</li>
-    <li>Dica: repara no que os outros pedem — quem pede Reis tem pelo menos um Rei.</li>
+    <li>Dica: repara no que o Duarte pede — se pede Reis, é porque tem pelo menos um Rei.</li>
   </ul>
   <p class="creditos">Imagens das cartas: <i>Vector Playing Cards</i> de Byron Knoll, em domínio público.</p>
   <form method="dialog"><button class="principal">Fechar</button></form>
 </dialog>
 
-<script src="cartas.js?v=4"></script>
-<script src="fim.js?v=4"></script>
-<script src="peixinho.js?v=4"></script>
+<script src="cartas.js?v=5"></script>
+<script src="fim.js?v=5"></script>
+<script src="peixinho.js?v=5"></script>
 </body>
 </html>

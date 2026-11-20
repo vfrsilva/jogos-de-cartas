@@ -808,64 +808,99 @@ body.painel {
 
 /* ---------- Peixinho ---------- */
 .peixinho { --tom: var(--peixe); }
-/* Os três adversários ficam em cima; o centro da mesa é para o lago e as jogadas. */
-.peixinho .mesa { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.peixinho .lugar { flex-direction: column; grid-row: 1; }
-.peixinho .lugar.esquerda { grid-column: 1; }
-.peixinho .lugar.topo { grid-column: 2; }
-.peixinho .lugar.direita { grid-column: 3; }
-.peixinho .mao { --espacos: 12; }
+.peixinho .mesa { grid-template-columns: minmax(0, 1fr); }
+.peixinho .lugar.topo { grid-column: 1; }
+.estado:empty { visibility: hidden; }
+@media (min-width: 621px) {
+  .peixinho .mao { --passo: min(var(--cw) * 1.04, (100vw - 32px - var(--cw)) / 12); }
+}
 
-.centro {
-  grid-column: 1 / -1;
+/* Palco: o que o Duarte diz em cima, o lago e as cartas no meio, o que tu dizes em baixo. */
+.palco {
+  grid-column: 1;
   grid-row: 2;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: 12px 18px;
+  justify-items: center;
+  align-content: center;
+  gap: 12px;
   width: min(100%, 600px);
+}
+.balao {
+  position: relative;
+  display: grid;
+  place-items: center;
+  max-width: 100%;
+  min-height: 2.7em;
+  padding: 8px 18px;
+  border: 2px solid var(--linha);
+  border-radius: 18px;
+  background: #0a2418;
+  font-size: 19px;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .35);
+  animation: fala .25s ease-out both;
+}
+/* Escondido mas a ocupar o lugar, para a mesa não saltar a cada fala. */
+.balao[hidden] { display: grid; visibility: hidden; animation: none; }
+.balao::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border: inherit;
+  background: inherit;
+}
+.balao.dele { border-color: var(--eles); }
+.balao.dele::after { top: -8px; border-width: 2px 0 0 2px; transform: rotate(45deg); }
+.balao.meu { border-color: var(--nos); }
+.balao.meu::after { bottom: -8px; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.balao.acao { padding: 0; border: 0; background: none; box-shadow: none; }
+.balao.acao::after { display: none; }
+.balao.acao .principal { padding: 12px 26px; font-size: 18px; animation: pulsa 1.4s ease-in-out infinite; }
+@keyframes fala {
+  from { transform: translateY(8px); opacity: 0; }
+}
+
+.meio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  min-height: calc(var(--ch) + 30px);
 }
 .lago {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--tom);
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .1em;
-  color: var(--tom);
 }
-.lago .costas { --cw: clamp(44px, 9dvh, 78px); }
-
-.falas { display: flex; flex-direction: column; gap: 6px; min-width: 0; margin: 0; padding: 0; list-style: none; }
-.falas li {
-  padding: 5px 12px;
-  border: 1px solid var(--linha);
-  border-radius: 12px;
-  background: rgba(4, 16, 10, .55);
-  color: var(--texto-suave);
-  font-size: 13px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.falas li:last-child {
-  padding: 8px 14px;
-  border-color: color-mix(in srgb, var(--tom) 60%, transparent);
-  color: var(--texto);
-  font-size: 16px;
-  white-space: normal;
-  animation: fala .25s ease-out both;
-}
-.falas li.bom:last-child { border-color: var(--nos); }
-.falas li.peixe { border-color: var(--ouro); color: var(--ouro); font-weight: 700; }
-@keyframes fala {
-  from { transform: translateY(8px); opacity: 0; }
+.lago:disabled { cursor: default; }
+.lago.pescar { color: var(--ouro); }
+.lago.pescar .costas { animation: pescar 1s ease-in-out infinite; }
+@keyframes pescar {
+  0%, 100% { box-shadow: 0 0 0 3px var(--ouro), 0 0 10px rgba(242, 201, 76, .5); transform: none; }
+  50% { box-shadow: 0 0 0 3px var(--ouro), 0 0 30px rgba(242, 201, 76, .9); transform: translateY(-4%) scale(1.04); }
 }
 
-.centro .passe { grid-column: 1 / -1; justify-self: center; }
-.pedido-alvos { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.montra { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; }
+.montra-cartas { display: flex; }
+.montra-cartas > * { --de: 0, 40%; margin-left: calc(var(--cw) * -0.5); animation: entra .3s cubic-bezier(.2, 1.2, .4, 1) both; }
+.montra-cartas > :first-child { margin-left: 0; }
+.legenda { max-width: 17em; margin: 0; color: var(--texto-suave); font-size: 15px; text-align: center; text-wrap: balance; }
+.legenda.bom { color: var(--nos); font-weight: 600; }
+.legenda.peixe { color: var(--ouro); font-size: 18px; font-weight: 700; }
 
 /* Na mão, as cartas do mesmo valor ficam empilhadas, com o número de cartas. */
 .conta {
@@ -881,17 +916,43 @@ body.painel {
 }
 .mao .carta.pilha-2 { box-shadow: 4px -4px 0 -1px #e7e1d2, 0 6px 14px rgba(0, 0, 0, .38); }
 .mao .carta.pilha-3 { box-shadow: 4px -4px 0 -1px #e7e1d2, 8px -8px 0 -2px #d6cfbd, 0 6px 14px rgba(0, 0, 0, .38); }
-.mao .carta.escolhida {
-  transform: translateY(-20%);
-  box-shadow: 0 0 0 3px var(--ouro), 0 0 22px rgba(242, 201, 76, .6), 0 14px 24px rgba(0, 0, 0, .45);
+/* As cartas que o Duarte te pediu. */
+.mao .carta.pedida {
+  transform: translateY(-14%);
+  box-shadow: 0 0 0 3px var(--eles), 0 0 22px rgba(255, 171, 145, .7), 0 12px 22px rgba(0, 0, 0, .45);
 }
 
+/* Peixinhos feitos, como pequenas fichas na pontuação. */
+.equipa .pontos small { font-size: 18px; }
+.placar:has(.feitos) { width: min(380px, calc(100vw - 20px)); }
+.feitos { display: flex; justify-content: space-between; gap: 16px; flex-basis: 100%; min-height: 26px; }
+.fichas { display: flex; flex-wrap: wrap; gap: 3px; }
+.fichas.eles { justify-content: flex-end; }
+.fichas i {
+  display: grid;
+  place-items: center;
+  min-width: 22px;
+  height: 26px;
+  padding: 0 3px;
+  border: 2px solid var(--nos);
+  border-radius: 5px;
+  background: var(--carta-fundo);
+  color: #1b1400;
+  font: 800 12px/1 system-ui, sans-serif;
+  animation: fim-pip .4s cubic-bezier(.2, 2, .4, 1) both;
+}
+.fichas.eles i { border-color: var(--eles); }
+
 @media (max-width: 620px) {
-  .centro { gap: 8px 12px; }
-  .centro .passe .rotulo { display: block; }
+  .palco { gap: 7px; }
+  .balao { min-height: 2.4em; padding: 5px 14px; font-size: 16px; }
+  .balao.acao .principal { padding: 8px 20px; font-size: 16px; }
+  .meio { gap: 14px; min-height: calc(var(--ch) + 20px); }
   .lago { font-size: 10px; gap: 4px; }
-  .falas { gap: 4px; }
-  .falas li { padding: 4px 10px; font-size: 12px; }
-  .falas li:last-child { padding: 6px 11px; font-size: 14px; }
+  .legenda { font-size: 13px; max-width: 13em; }
+  .legenda.peixe { font-size: 15px; }
   .conta { font-size: 12px; }
+  .equipa .pontos small { font-size: 15px; }
+  .fichas i { min-width: 20px; height: 23px; font-size: 11px; }
+  .feitos { min-height: 23px; }
 }
