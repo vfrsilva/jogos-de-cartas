@@ -104,7 +104,7 @@ const mostrarFim = (() => {
       barra.style.width = `${Math.max(0, Math.min(100, ((l.total - l.mais) / l.limite) * 100))}%`;
       barras.push([barra, Math.min(100, (l.total / l.limite) * 100)]);
       trilho.append(barra);
-      linha.append(el('span', 'quem', l.nome), el('span', l.mais ? 'mais tem' : 'mais', `+${l.mais}`), trilho, el('span', 'total', l.total));
+      linha.append(el('span', 'quem', l.nome), el('span', l.mais ? 'mais tem' : 'mais', l.etiqueta ?? `+${l.mais}`), trilho, el('span', 'total', l.total));
       return linha;
     }));
     return () => requestAnimationFrame(() => { for (const [b, w] of barras) b.style.width = `${w}%`; });

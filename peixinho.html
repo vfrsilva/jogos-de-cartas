@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06170f">
+<title>Peixinho</title>
+<link rel="stylesheet" href="style.css?v=4">
+</head>
+<body class="peixinho">
+
+<header class="barra">
+  <div class="marca"><a class="voltar" href="index.html" aria-label="Voltar à lista de jogos">‹<span class="t-longo"> Jogos</span></a><h1>Peixinho</h1></div>
+  <nav class="acoes">
+    <button type="button" id="btn-regras">Regras</button>
+    <button type="button" id="btn-novo"><span class="t-longo">Novo jogo</span><span class="t-curto">Novo</span></button>
+  </nav>
+</header>
+
+<main class="mesa">
+  <div class="lugar esquerda" id="lugar-3">
+    <span class="nome"></span>
+    <span class="costas"><b></b></span>
+  </div>
+  <div class="lugar topo" id="lugar-2">
+    <span class="nome"></span>
+    <span class="costas"><b></b></span>
+  </div>
+  <div class="lugar direita" id="lugar-1">
+    <span class="nome"></span>
+    <span class="costas"><b></b></span>
+  </div>
+
+  <div class="centro">
+    <div class="lago" aria-label="Lago">
+      <span class="costas grande" id="lago-monte"><b id="lago-n"></b></span>
+      <span id="lago-texto">Lago</span>
+    </div>
+    <ul class="falas" id="falas" aria-live="polite"></ul>
+    <div class="passe pedido" id="pedido" hidden>
+      <span class="rotulo" id="pedido-titulo"></span>
+      <div class="pedido-alvos" id="pedido-alvos"></div>
+    </div>
+  </div>
+</main>
+
+<footer class="eu" id="lugar-0">
+  <p class="estado" id="estado" aria-live="polite"></p>
+  <div class="mao" id="mao" aria-label="A tua mão"></div>
+</footer>
+
+<div class="placar quatro" aria-label="Peixinhos feitos">
+  <div class="jog eu"><span class="rotulo">Noah</span><span class="total" id="total-0">0</span><span class="ronda" id="ronda-0">—</span></div>
+  <div class="jog"><span class="rotulo">Duarte</span><span class="total" id="total-1">0</span><span class="ronda" id="ronda-1">—</span></div>
+  <div class="jog"><span class="rotulo">Tomas</span><span class="total" id="total-2">0</span><span class="ronda" id="ronda-2">—</span></div>
+  <div class="jog"><span class="rotulo">Sira</span><span class="total" id="total-3">0</span><span class="ronda" id="ronda-3">—</span></div>
+</div>
+
+<dialog id="dlg-fim"></dialog>
+
+<dialog id="dlg-regras">
+  <h2>Regras do Peixinho</h2>
+  <ul>
+    <li>Quatro jogadores, cada um por si, com as 52 cartas. Cada um recebe 5 cartas; as restantes ficam no <b>lago</b>.</li>
+    <li>O objetivo é juntar <b>peixinhos</b>: as 4 cartas do mesmo valor (os 4 Reis, os 4 Setes…).</li>
+    <li>Na tua vez, escolhe um valor que tenhas na mão e pede-o a um adversário.</li>
+    <li>Se ele tiver cartas desse valor, <b>dá-tas todas</b> e jogas outra vez.</li>
+    <li>Se não tiver, <b>vais ao peixinho</b>: pescas uma carta do lago. Se for do valor que pediste, jogas outra vez; senão, passa a vez ao jogador seguinte.</li>
+    <li>Quando juntas as 4 cartas de um valor, o peixinho fica feito e sai da tua mão.</li>
+    <li>Quem ficar sem cartas pesca uma do lago na sua vez. Com o lago vazio, quem não tiver cartas deixa de jogar.</li>
+    <li>O jogo acaba quando os 13 peixinhos estiverem feitos. Ganha quem tiver <b>mais peixinhos</b>.</li>
+    <li>Dica: repara no que os outros pedem — quem pede Reis tem pelo menos um Rei.</li>
+  </ul>
+  <p class="creditos">Imagens das cartas: <i>Vector Playing Cards</i> de Byron Knoll, em domínio público.</p>
+  <form method="dialog"><button class="principal">Fechar</button></form>
+</dialog>
+
+<script src="cartas.js?v=4"></script>
+<script src="fim.js?v=4"></script>
+<script src="peixinho.js?v=4"></script>
+</body>
+</html>

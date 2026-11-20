@@ -9,6 +9,7 @@
   --eles: #ffab91;
   --perigo: #ff7b6b;
   --copas: #ff5d73;
+  --peixe: #6ee7c5;
   --carta-fundo: #fffdf8;
   --tom: var(--ouro);
   --serifa: Georgia, "Times New Roman", serif;
@@ -635,9 +636,9 @@ body.painel {
 
 .jogos-lista {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
   gap: 22px;
-  max-width: 1040px;
+  max-width: 1180px;
   margin: 0 auto;
 }
 .jogo {
@@ -655,11 +656,13 @@ body.painel {
 }
 .jogo:nth-child(2) { animation-delay: .08s; }
 .jogo:nth-child(3) { animation-delay: .16s; }
+.jogo:nth-child(4) { animation-delay: .24s; }
 @keyframes sobe {
   from { transform: translateY(24px); opacity: 0; }
 }
 .jogo.bisca-t { --tom: var(--nos); }
 .jogo.copas-t { --tom: var(--copas); }
+.jogo.peixinho-t { --tom: var(--peixe); }
 .jogo:hover {
   transform: translateY(-6px);
   border-color: var(--tom);
@@ -801,4 +804,94 @@ body.painel {
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- Peixinho ---------- */
+.peixinho { --tom: var(--peixe); }
+/* Os três adversários ficam em cima; o centro da mesa é para o lago e as jogadas. */
+.peixinho .mesa { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.peixinho .lugar { flex-direction: column; grid-row: 1; }
+.peixinho .lugar.esquerda { grid-column: 1; }
+.peixinho .lugar.topo { grid-column: 2; }
+.peixinho .lugar.direita { grid-column: 3; }
+.peixinho .mao { --espacos: 12; }
+
+.centro {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px 18px;
+  width: min(100%, 600px);
+}
+.lago {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--tom);
+}
+.lago .costas { --cw: clamp(44px, 9dvh, 78px); }
+
+.falas { display: flex; flex-direction: column; gap: 6px; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.falas li {
+  padding: 5px 12px;
+  border: 1px solid var(--linha);
+  border-radius: 12px;
+  background: rgba(4, 16, 10, .55);
+  color: var(--texto-suave);
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.falas li:last-child {
+  padding: 8px 14px;
+  border-color: color-mix(in srgb, var(--tom) 60%, transparent);
+  color: var(--texto);
+  font-size: 16px;
+  white-space: normal;
+  animation: fala .25s ease-out both;
+}
+.falas li.bom:last-child { border-color: var(--nos); }
+.falas li.peixe { border-color: var(--ouro); color: var(--ouro); font-weight: 700; }
+@keyframes fala {
+  from { transform: translateY(8px); opacity: 0; }
+}
+
+.centro .passe { grid-column: 1 / -1; justify-self: center; }
+.pedido-alvos { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+
+/* Na mão, as cartas do mesmo valor ficam empilhadas, com o número de cartas. */
+.conta {
+  position: absolute;
+  left: 7%;
+  top: 36%;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--ouro);
+  color: #1b1400;
+  font: 800 13px/1.35 system-ui, sans-serif;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .45);
+}
+.mao .carta.pilha-2 { box-shadow: 4px -4px 0 -1px #e7e1d2, 0 6px 14px rgba(0, 0, 0, .38); }
+.mao .carta.pilha-3 { box-shadow: 4px -4px 0 -1px #e7e1d2, 8px -8px 0 -2px #d6cfbd, 0 6px 14px rgba(0, 0, 0, .38); }
+.mao .carta.escolhida {
+  transform: translateY(-20%);
+  box-shadow: 0 0 0 3px var(--ouro), 0 0 22px rgba(242, 201, 76, .6), 0 14px 24px rgba(0, 0, 0, .45);
+}
+
+@media (max-width: 620px) {
+  .centro { gap: 8px 12px; }
+  .centro .passe .rotulo { display: block; }
+  .lago { font-size: 10px; gap: 4px; }
+  .falas { gap: 4px; }
+  .falas li { padding: 4px 10px; font-size: 12px; }
+  .falas li:last-child { padding: 6px 11px; font-size: 14px; }
+  .conta { font-size: 12px; }
 }
