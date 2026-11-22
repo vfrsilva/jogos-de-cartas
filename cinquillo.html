@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06170f">
+<title>Cinquillo</title>
+<link rel="stylesheet" href="style.css?v=18">
+</head>
+<body class="cinquillo">
+
+<header class="barra">
+  <div class="marca"><a class="voltar" href="index.html" aria-label="Voltar à lista de jogos">‹<span class="t-longo"> Jogos</span></a><h1>Cinquillo</h1></div>
+  <nav class="acoes">
+    <button type="button" id="btn-regras">Regras</button>
+    <button type="button" id="btn-novo"><span class="t-longo">Novo jogo</span><span class="t-curto">Novo</span></button>
+  </nav>
+</header>
+
+<main class="mesa">
+  <div class="lugar esquerda" id="lugar-3">
+    <span class="nome">Sira</span>
+    <span class="costas"><b></b></span>
+    <span class="aviso">Passo</span>
+  </div>
+  <div class="lugar topo" id="lugar-2">
+    <span class="nome">Tomas</span>
+    <span class="costas"><b></b></span>
+    <span class="aviso">Passo</span>
+  </div>
+  <div class="lugar direita" id="lugar-1">
+    <span class="nome">Duarte</span>
+    <span class="costas"><b></b></span>
+    <span class="aviso">Passo</span>
+  </div>
+
+  <div class="tabuleiro" id="tabuleiro" aria-label="Cartas na mesa"></div>
+</main>
+
+<footer class="eu" id="lugar-0">
+  <p class="estado" id="estado" aria-live="polite"></p>
+  <button type="button" class="principal" id="btn-passar" hidden>Nenhuma carta encaixa — Passar</button>
+  <div class="mao" id="mao" aria-label="A tua mão"></div>
+</footer>
+
+<div class="placar quatro" aria-label="Rondas ganhas">
+  <div class="jog eu"><span class="rotulo">Noah</span><span class="total" id="total-0">0</span><span class="ronda" id="ronda-0"></span></div>
+  <div class="jog"><span class="rotulo">Duarte</span><span class="total" id="total-1">0</span><span class="ronda" id="ronda-1"></span></div>
+  <div class="jog"><span class="rotulo">Tomas</span><span class="total" id="total-2">0</span><span class="ronda" id="ronda-2"></span></div>
+  <div class="jog"><span class="rotulo">Sira</span><span class="total" id="total-3">0</span><span class="ronda" id="ronda-3"></span></div>
+</div>
+
+<dialog id="dlg-fim"></dialog>
+
+<dialog id="dlg-regras">
+  <h2>Regras do Cinquillo</h2>
+  <ul>
+    <li>Quatro jogadores, cada um por si, com a baralha espanhola de 40 cartas (1 a 7, Sota 10, Cavalo 11 e Rei 12) de ouros, copas, espadas e paus. Cada um recebe 10 cartas.</li>
+    <li>O objetivo é ser o <b>primeiro a ficar sem cartas</b>.</li>
+    <li>Começa quem tem o <b>5 de ouros</b>, que é a primeira carta a ir para a mesa.</li>
+    <li>Na tua vez jogas uma carta que encaixe: um <b>5</b> para abrir um naipe novo, ou a carta <b>imediatamente abaixo ou acima</b> das que já estão na mesa nesse naipe (4, 3, 2, 1 para um lado; 6, 7, 10, 11, 12 para o outro).</li>
+    <li>Depois do 7 vem a Sota (10): na baralha de 40 cartas não há 8 nem 9.</li>
+    <li>Se tiveres uma carta que encaixe, <b>tens de jogar</b>. Só passas quando nenhuma encaixa.</li>
+    <li>As casas onde podes jogar ficam a brilhar na mesa; podes tocar na carta da tua mão ou na casa.</li>
+    <li>Ganha o jogo quem ganhar primeiro <b>3 rondas</b>.</li>
+    <li>Dica: guardar um 5 ou uma carta que os outros precisam atrasa-os — mas só se tiveres outra carta para jogar.</li>
+  </ul>
+  <p class="creditos">Baralha espanhola: <i>Baraja española completa</i> de Basquetteur (Wikimedia Commons), licença CC BY-SA 3.0, recortada em cartas individuais.</p>
+  <form method="dialog"><button class="principal">Fechar</button></form>
+</dialog>
+
+<script src="cartas.js?v=18"></script>
+<script src="fim.js?v=18"></script>
+<script src="cinquillo.js?v=18"></script>
+</body>
+</html>

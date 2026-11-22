@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06170f">
+<title>Contramão</title>
+<link rel="stylesheet" href="style.css?v=18">
+</head>
+<body class="contramao" data-comando="contramao">
+
+<header class="barra">
+  <div class="marca"><a class="voltar" href="index.html" aria-label="Voltar à lista de jogos">‹<span class="t-longo"> Jogos</span></a><h1>Contramão</h1></div>
+  <nav class="acoes">
+    <button type="button" id="btn-regras">Regras</button>
+    <button type="button" id="btn-veiculo"><span class="t-longo">Veículo</span><span class="t-curto">🏍</span></button>
+    <button type="button" id="btn-som" aria-label="Desligar o som">🔊</button>
+    <button type="button" id="btn-novo"><span class="t-longo">Recomeçar</span><span class="t-curto">Novo</span></button>
+  </nav>
+</header>
+
+<main class="recinto">
+  <canvas id="tela" aria-label="Estrada vista do teu carro, com carros a vir de frente"></canvas>
+
+  <div class="hud" aria-live="off">
+    <div class="hud-caixa"><span>Nível</span><b id="hud-nivel">1</b></div>
+  </div>
+  <div class="metros" aria-label="Metros percorridos"><b><span id="hud-metros">0</span> m</b><small id="hud-recorde"></small></div>
+  <div class="hud hud-direita">
+    <div class="hud-caixa"><span>Laser</span><b class="lasers" id="hud-laser">⚡⚡⚡</b></div>
+    <div class="hud-caixa"><span>Vidas</span><b class="vidas" id="hud-vidas"></b></div>
+  </div>
+  <div class="deposito" id="deposito" aria-label="Combustível"><span>⛽</span><i><b id="deposito-nivel"></b></i></div>
+  <div class="hud-grande" id="hud-grande" aria-live="polite"></div>
+
+  <div class="toques" aria-label="Comandos">
+    <div><button type="button" data-dir="-1" aria-label="Faixa da esquerda">◀</button></div>
+    <div class="mudancas"><button type="button" class="tiro" data-laser="1" aria-label="Disparar o laser">⚡</button></div>
+    <div><button type="button" data-dir="1" aria-label="Faixa da direita">▶</button></div>
+  </div>
+</main>
+
+<dialog id="dlg-fim"></dialog>
+
+<dialog id="dlg-veiculos">
+  <h2>Escolhe o veículo</h2>
+  <div class="circuitos veiculos" id="veiculos"></div>
+  <p class="creditos">A velocidade é igual para todos.</p>
+</dialog>
+
+<dialog id="dlg-regras">
+  <h2>Regras do Contramão</h2>
+  <ul>
+    <li>Vais em <b>contramão</b> numa estrada que começa com três faixas: os outros carros vêm de frente, na tua direção. O objetivo é fazer o <b>maior número de metros</b> (o contador ao centro, em cima).</li>
+    <li>O teu carro (o vermelho, em baixo) <b>anda sozinho</b>, sempre à velocidade máxima do nível em que estás. Tu mudas de faixa com a <b>seta para a esquerda</b> e a <b>seta para a direita</b>. No telemóvel, toca no lado esquerdo ou direito do ecrã.</li>
+    <li>Vês os carros desde o <b>horizonte</b>, a aproximarem-se passo a passo. Fica sempre pelo menos uma faixa livre.</li>
+    <li>De <b>10 em 10 segundos</b> passas por uma <b>meta</b>: é um nível novo, e os carros vêm mais depressa e em maior número.</li>
+    <li>A estrada alarga: no <b>nível 5</b> passa a ter <b>4 faixas</b> e no <b>nível 10</b> passa a ter <b>6</b>. As faixas novas abrem-se à direita, logo a seguir à meta.</li>
+    <li>A <b>barra de espaços</b> dispara um <b>laser</b> que destrói o carro mais próximo na tua faixa. Só tens <b>3 disparos</b> por jogo. Sem carro à frente, o laser não dispara nem se gasta.</li>
+    <li>O carro gasta <b>combustível</b> (a barra por baixo do painel). De vez em quando aparece uma <b>faixa de abastecimento</b> verde, à esquerda ou à direita da estrada: enquanto lá andares, o depósito volta a encher aos poucos e não há carros de frente.</li>
+    <li>Sai da faixa de abastecimento antes de ela acabar, senão bates. Se o depósito chegar a zero perdes uma vida e ficas com meio depósito.</li>
+    <li>Ao começar escolhes entre <b>carro</b>, <b>mota</b> e <b>monster truck</b>: muda o aspeto e o som do motor, mas a velocidade é igual. O botão 🔊 liga e desliga o som.</li>
+    <li>Tens <b>3 vidas</b>. Se mudares de faixa mesmo para cima de um carro que está a passar ao teu lado, também conta como choque.</li>
+  </ul>
+  <form method="dialog"><button class="principal">Fechar</button></form>
+</dialog>
+
+<script src="fim.js?v=18"></script>
+<script src="contramao.js?v=18"></script>
+<script src="comando.js?v=18"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06170f">
+<title>Blackjack</title>
+<link rel="stylesheet" href="style.css?v=18">
+</head>
+<body class="blackjack">
+
+<header class="barra">
+  <div class="marca"><a class="voltar" href="index.html" aria-label="Voltar à lista de jogos">‹<span class="t-longo"> Jogos</span></a><h1>Blackjack</h1></div>
+  <nav class="acoes">
+    <button type="button" id="btn-regras">Regras</button>
+    <button type="button" id="btn-novo"><span class="t-longo">Novo jogo</span><span class="t-curto">Novo</span></button>
+  </nav>
+</header>
+
+<main class="mesa">
+  <div class="lugar banca" id="banca">
+    <span class="nome">Banca <small id="ronda-txt"></small></span>
+    <div class="cartas-bj" id="cartas-banca" aria-label="Cartas da banca"></div>
+    <span class="valor" id="valor-banca"></span>
+  </div>
+
+  <div class="lugar" id="lugar-3">
+    <span class="nome"></span>
+    <div class="cartas-bj" id="cartas-3"></div>
+    <span class="valor" id="valor-3"></span>
+  </div>
+  <div class="lugar" id="lugar-2">
+    <span class="nome"></span>
+    <div class="cartas-bj" id="cartas-2"></div>
+    <span class="valor" id="valor-2"></span>
+  </div>
+  <div class="lugar" id="lugar-1">
+    <span class="nome"></span>
+    <div class="cartas-bj" id="cartas-1"></div>
+    <span class="valor" id="valor-1"></span>
+  </div>
+</main>
+
+<footer class="eu" id="lugar-0">
+  <p class="estado" id="estado" aria-live="polite"></p>
+  <div class="mao" id="mao" aria-label="A tua mão"></div>
+  <span class="valor" id="valor-0"></span>
+  <div class="bj-controlos" id="controlos"></div>
+</footer>
+
+<div class="placar quatro" aria-label="Pontos">
+  <div class="jog eu"><span class="rotulo">Noah</span><span class="total" id="total-0">1000</span><span class="ronda" id="ronda-0">—</span></div>
+  <div class="jog"><span class="rotulo">Duarte</span><span class="total" id="total-1">1000</span><span class="ronda" id="ronda-1">—</span></div>
+  <div class="jog"><span class="rotulo">Tomas</span><span class="total" id="total-2">1000</span><span class="ronda" id="ronda-2">—</span></div>
+  <div class="jog"><span class="rotulo">Sira</span><span class="total" id="total-3">1000</span><span class="ronda" id="ronda-3">—</span></div>
+</div>
+
+<dialog id="dlg-fim"></dialog>
+
+<dialog id="dlg-regras">
+  <h2>Regras do Blackjack</h2>
+  <ul>
+    <li>Quatro jogadores, cada um a jogar contra a <b>banca</b>. Cada jogador começa com <b>1000 pontos</b>.</li>
+    <li>Em cada ronda apostas pontos (no mínimo 10). Depois, todos recebem 2 cartas; a banca fica com uma à vista e outra virada para baixo.</li>
+    <li>O objetivo é ficar <b>mais perto de 21</b> do que a banca, sem passar. As figuras valem 10, o Ás vale 11 (ou 1, se com 11 passasses dos 21) e as outras cartas valem o seu número.</li>
+    <li>Na tua vez podes <b>pedir carta</b> as vezes que quiseres ou <b>ficar</b>. Se passares dos 21, rebentas e perdes a aposta.</li>
+    <li><b>Dobrar</b>: só com as 2 primeiras cartas. Dobras a aposta, recebes uma única carta e ficas.</li>
+    <li>No fim, a banca vira a carta escondida e pede até ter <b>17 ou mais</b>.</li>
+    <li>Se ganhares à banca (ou ela rebentar), ganhas o valor da aposta. Em caso de empate ficas com a aposta. Se perderes, perdes a aposta.</li>
+    <li>Um <b>blackjack</b> (Ás e uma carta de 10 logo nas 2 primeiras cartas) paga uma vez e meia a aposta — a não ser que a banca também tenha um.</li>
+    <li>O jogo dura <b>10 rondas</b>. Ganha quem tiver mais pontos no fim. Se ficares sem pontos, o jogo acaba para ti.</li>
+  </ul>
+  <p class="creditos">Imagens das cartas: <i>Vector Playing Cards</i> de Byron Knoll, em domínio público.</p>
+  <form method="dialog"><button class="principal">Fechar</button></form>
+</dialog>
+
+<script src="cartas.js?v=18"></script>
+<script src="fim.js?v=18"></script>
+<script src="blackjack.js?v=18"></script>
+</body>
+</html>

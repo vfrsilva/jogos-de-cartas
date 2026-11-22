@@ -101,8 +101,9 @@ const mostrarFim = (() => {
       const linha = el('div', l.eu ? 'linha eu' : 'linha');
       const trilho = el('span', 'trilho');
       const barra = el('span');
-      barra.style.width = `${Math.max(0, Math.min(100, ((l.total - l.mais) / l.limite) * 100))}%`;
-      barras.push([barra, Math.min(100, (l.total / l.limite) * 100)]);
+      // `barra` (0–100) fixa o comprimento da barra quando o total não é um número de pontos (tempos do Rally).
+      barra.style.width = `${l.barra !== undefined ? 0 : Math.max(0, Math.min(100, ((l.total - l.mais) / l.limite) * 100))}%`;
+      barras.push([barra, Math.min(100, l.barra ?? (l.total / l.limite) * 100)]);
       trilho.append(barra);
       linha.append(el('span', 'quem', l.nome), el('span', l.mais ? 'mais tem' : 'mais', l.etiqueta ?? `+${l.mais}`), trilho, el('span', 'total', l.total));
       return linha;

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06170f">
+<title>Rally</title>
+<link rel="stylesheet" href="style.css?v=18">
+</head>
+<body class="rally" data-comando="rally">
+
+<header class="barra">
+  <div class="marca"><a class="voltar" href="index.html" aria-label="Voltar à lista de jogos">‹<span class="t-longo"> Jogos</span></a><h1>Rally <small id="titulo-pista"></small></h1></div>
+  <nav class="acoes">
+    <button type="button" id="btn-regras">Regras</button>
+    <button type="button" id="btn-circuito"><span class="t-longo">Circuitos</span><span class="t-curto">Pista</span></button>
+    <button type="button" id="btn-novo"><span class="t-longo">Recomeçar</span><span class="t-curto">Novo</span></button>
+  </nav>
+</header>
+
+<main class="recinto">
+  <canvas id="tela" aria-label="Pista de rally vista de cima"></canvas>
+
+  <div class="hud" aria-live="off">
+    <div class="hud-caixa"><span>Lugar</span><b id="hud-lugar">—</b></div>
+    <div class="hud-caixa"><span>Volta</span><b id="hud-volta">—</b></div>
+    <div class="hud-caixa"><span>Tempo</span><b id="hud-tempo">0:00.0</b></div>
+  </div>
+  <ol class="hud-ordem" id="hud-ordem" aria-label="Classificação"></ol>
+  <div class="hud-grande" id="hud-grande" aria-live="polite"></div>
+
+  <div class="toques" aria-label="Comandos">
+    <div>
+      <button type="button" data-tecla="esq" aria-label="Virar à esquerda">◀</button>
+      <button type="button" data-tecla="dir" aria-label="Virar à direita">▶</button>
+    </div>
+    <div>
+      <button type="button" data-tecla="baixo" aria-label="Travar">▼</button>
+      <button type="button" data-tecla="cima" aria-label="Acelerar">▲</button>
+    </div>
+  </div>
+</main>
+
+<dialog id="dlg-fim"></dialog>
+
+<dialog id="dlg-circuitos">
+  <h2>Escolhe o circuito</h2>
+  <div class="circuitos" id="circuitos"></div>
+  <p class="creditos">Seta para cima acelera, seta para baixo trava, setas para os lados viram.</p>
+</dialog>
+
+<dialog id="dlg-regras">
+  <h2>Regras do Rally</h2>
+  <ul>
+    <li>Quatro carros na mesma pista de terra, <b>4 voltas</b>. Ganha quem cortar a meta primeiro. Tu és o <b>carro vermelho</b> e partes de trás.</li>
+    <li><b>Seta para cima</b> acelera, <b>seta para baixo</b> trava (e, parado, faz marcha-atrás), <b>setas para os lados</b> viram. No telemóvel há botões no ecrã.</li>
+    <li>A pista tem <b>subidas e descidas</b>: as zonas mais claras são as mais altas. A subir o carro perde força, a descer ganha.</li>
+    <li>As <b>rampas</b> (setas amarelas) e as <b>lombas</b> fazem o carro saltar. No ar não se vira nem se trava: alinha o carro antes do salto.</li>
+    <li>O piso é de terra: o carro <b>derrapa</b> nas curvas. Na relva anda-se muito mais devagar.</li>
+    <li>Vale <b>chocar</b>: um toque na traseira de um adversário fá-lo rodar. A ti também!</li>
+    <li>Não dá para atalhar: quem se afasta muito da pista é posto de volta no sítio de onde saiu.</li>
+  </ul>
+  <form method="dialog"><button class="principal">Fechar</button></form>
+</dialog>
+
+<script src="fim.js?v=18"></script>
+<script src="rally.js?v=18"></script>
+<script src="comando.js?v=18"></script>
+</body>
+</html>

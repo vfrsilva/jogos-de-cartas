@@ -4,18 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#06170f">
-<title>Jogos de Cartas</title>
-<link rel="stylesheet" href="style.css?v=5">
+<title>Jogos</title>
+<link rel="stylesheet" href="style.css?v=18">
 </head>
 <body class="painel">
 
 <header class="capa">
   <div class="naipes" aria-hidden="true">♠<b>♥</b>♣<b>♦</b></div>
-  <h1>Jogos de Cartas</h1>
+  <h1>Jogos</h1>
   <p>Escolhe um jogo para começar.</p>
 </header>
 
-<main class="jogos-lista">
+<main>
+<h2 class="seccao">Cartas</h2>
+<div class="jogos-lista">
   <a class="jogo sueca-t" href="sueca.html">
     <span class="leque" aria-hidden="true">
       <span class="carta"><img src="cartas/king_of_hearts.svg" alt=""></span>
@@ -75,9 +77,135 @@
       <span class="jogar">Jogar ›</span>
     </span>
   </a>
+  <a class="jogo blackjack-t" href="blackjack.html">
+    <span class="leque" aria-hidden="true">
+      <span class="carta"><img src="cartas/10_of_diamonds.svg" alt=""></span>
+      <span class="carta"><img src="cartas/ace_of_spades.svg" alt=""></span>
+      <span class="carta"><img src="cartas/jack_of_spades.svg" alt=""></span>
+    </span>
+    <span class="info">
+      <h2>Blackjack</h2>
+      <span class="chips"><i>4 jogadores</i><i>contra a banca</i><i>1000 pontos</i></span>
+      <p>Aposta os teus pontos e chega o mais perto possível de 21, sem passar.</p>
+      <span class="guardado" id="res-blackjack"></span>
+      <span class="jogar">Jogar ›</span>
+    </span>
+  </a>
+  <a class="jogo cinquillo-t" href="cinquillo.html">
+    <span class="leque" aria-hidden="true">
+      <span class="carta es"><img src="baraja/4_de_oros.png" alt=""></span>
+      <span class="carta es"><img src="baraja/5_de_oros.png" alt=""></span>
+      <span class="carta es"><img src="baraja/6_de_oros.png" alt=""></span>
+    </span>
+    <span class="info">
+      <h2>Cinquillo</h2>
+      <span class="chips"><i>4 jogadores</i><i>cada um por si</i><i>baralha espanhola</i></span>
+      <p>Os naipes crescem na mesa a partir do 5. Ganha quem ficar primeiro sem cartas.</p>
+      <span class="guardado" id="res-cinquillo"></span>
+      <span class="jogar">Jogar ›</span>
+    </span>
+  </a>
+</div>
+
+<h2 class="seccao">Ação e desporto</h2>
+<div class="jogos-lista poucos">
+  <a class="jogo rally-t" href="rally.html">
+    <span class="leque" aria-hidden="true">
+      <svg class="pista-mini" viewBox="0 0 200 120">
+        <path d="M50 22h100a38 38 0 0 1 0 76h-22q-14 0-28-14t-28-14H50a24 24 0 0 1 0-48z" fill="none" stroke="#5b3f22" stroke-width="30" stroke-linejoin="round"/>
+        <path d="M50 22h100a38 38 0 0 1 0 76h-22q-14 0-28-14t-28-14H50a24 24 0 0 1 0-48z" fill="none" stroke="#c99a63" stroke-width="22" stroke-linejoin="round"/>
+        <path d="M84 12v20" stroke="#fff" stroke-width="4" stroke-dasharray="4 4"/>
+        <g transform="translate(118 22)"><rect x="-11" y="-6" width="22" height="12" rx="3.5" fill="#e63946" stroke="#3a0c10"/><rect x="0" y="-4.5" width="5" height="9" rx="1" fill="#14202c"/></g>
+        <g transform="translate(176 66) rotate(100)"><rect x="-11" y="-6" width="22" height="12" rx="3.5" fill="#3a86ff" stroke="#0c1d3a"/><rect x="0" y="-4.5" width="5" height="9" rx="1" fill="#14202c"/></g>
+        <g transform="translate(104 86) rotate(215)"><rect x="-11" y="-6" width="22" height="12" rx="3.5" fill="#ffc61a" stroke="#3a2c06"/><rect x="0" y="-4.5" width="5" height="9" rx="1" fill="#14202c"/></g>
+      </svg>
+    </span>
+    <span class="info">
+      <h2>Rally</h2>
+      <span class="chips"><i>4 carros</i><i>3 circuitos</i><i>saltos</i></span>
+      <p>Super especiais em pistas de terra, com rampas, derrapagens e encontrões. Conduz com as setas.</p>
+      <span class="guardado" id="res-rally"></span>
+      <span class="jogar">Jogar ›</span>
+    </span>
+  </a>
+
+  <a class="jogo contramao-t" href="contramao.html">
+    <span class="leque" aria-hidden="true">
+      <svg class="pista-mini" viewBox="0 0 200 120">
+        <path d="M0 0h200v44H0z" fill="#c2557a"/><path d="M0 0h200v22H0z" fill="#1d2b53" opacity=".7"/>
+        <circle cx="140" cy="40" r="12" fill="#ffe9a8"/>
+        <path d="M0 44h200v76H0z" fill="#3a6e3a"/>
+        <path d="M100 44 190 120H10z" fill="#3c3f48"/>
+        <path d="M100 44 190 120h10L100 44zM100 44 10 120H0z" fill="#d8d2c2"/>
+        <path d="M97 60l-3 14M92 84l-5 22M103 60l3 14M108 84l5 22" stroke="#f1ead2" stroke-width="2.5"/>
+        <g transform="translate(100 62)"><rect x="-9" y="-11" width="18" height="6" rx="2" fill="#3a86ff"/><rect x="-11" y="-6" width="22" height="8" rx="2" fill="#3a86ff"/><rect x="-7" y="-10" width="14" height="4" fill="#9fd3e8"/><circle cx="-7.500" cy="-2" r="2" fill="#fff6b0"/><circle cx="7.500" cy="-2" r="2" fill="#fff6b0"/></g>
+        <g transform="translate(136 96) scale(1.7)"><rect x="-9" y="-11" width="18" height="6" rx="2" fill="#ffc61a"/><rect x="-11" y="-6" width="22" height="8" rx="2" fill="#ffc61a"/><rect x="-7" y="-10" width="14" height="4" fill="#9fd3e8"/><circle cx="-7.500" cy="-2" r="2" fill="#fff6b0"/><circle cx="7.500" cy="-2" r="2" fill="#fff6b0"/></g>
+        <g transform="translate(64 116) scale(2.1)"><rect x="-9" y="-11" width="18" height="6" rx="2" fill="#e63946"/><rect x="-11" y="-6" width="22" height="8" rx="2" fill="#e63946"/><rect x="-7" y="-10" width="14" height="4" fill="#1a2634"/><rect x="-10" y="-4" width="5" height="3" fill="#ff3b30"/><rect x="5" y="-4" width="5" height="3" fill="#ff3b30"/></g>
+      </svg>
+    </span>
+    <span class="info">
+      <h2>Contramão</h2>
+      <span class="chips"><i>1 jogador</i><i>3 a 6 faixas</i><i>reflexos</i></span>
+      <p>Os carros vêm de frente e o teu anda sozinho: só tens de mudar de faixa a tempo.</p>
+      <span class="guardado" id="res-contramao"></span>
+      <span class="jogar">Jogar ›</span>
+    </span>
+  </a>
+
+  <a class="jogo downforce-t" href="downforce.html">
+    <span class="leque" aria-hidden="true">
+      <svg class="pista-mini" viewBox="0 0 200 120">
+        <path d="M0 0h200v44H0z" fill="#8fc4ea"/><path d="M0 0h200v20H0z" fill="#2a6fb8" opacity=".7"/>
+        <circle cx="150" cy="18" r="9" fill="#fff6c9"/>
+        <path d="M0 44h200v76H0z" fill="#4a9143"/>
+        <path d="M100 44 196 120H4z" fill="#f1ead2"/>
+        <path d="M100 44 186 120H14z" fill="#3c3f48"/>
+        <path d="M94 60l-10 22M78 94l-12 26M100 60v22M100 94v26M106 60l10 22M122 94l12 26" stroke="#f1ead2" stroke-width="2"/>
+        <path d="M70 52h60v9H70z" fill="#16181d"/><path d="M72 61v10M128 61v10" stroke="#cfd4d8" stroke-width="2"/>
+        <g transform="translate(112 78) scale(.8)"><rect x="-9" y="-11" width="18" height="6" rx="2" fill="#ffc61a"/><rect x="-11" y="-6" width="22" height="8" rx="2" fill="#ffc61a"/><rect x="-7" y="-10" width="14" height="4" fill="#1a2634"/><rect x="-10" y="-4" width="5" height="3" fill="#ff3b30"/><rect x="5" y="-4" width="5" height="3" fill="#ff3b30"/></g>
+        <g transform="translate(74 96) scale(1.4)"><rect x="-9" y="-11" width="18" height="6" rx="2" fill="#3a86ff"/><rect x="-11" y="-6" width="22" height="8" rx="2" fill="#3a86ff"/><rect x="-7" y="-10" width="14" height="4" fill="#1a2634"/><rect x="-10" y="-4" width="5" height="3" fill="#ff3b30"/><rect x="5" y="-4" width="5" height="3" fill="#ff3b30"/></g>
+        <g transform="translate(124 116) scale(2)"><rect x="-9" y="-11" width="18" height="6" rx="2" fill="#e63946"/><rect x="-11" y="-6" width="22" height="8" rx="2" fill="#e63946"/><rect x="-7" y="-10" width="14" height="4" fill="#1a2634"/><rect x="-10" y="-4" width="5" height="3" fill="#ff3b30"/><rect x="5" y="-4" width="5" height="3" fill="#ff3b30"/></g>
+      </svg>
+    </span>
+    <span class="info">
+      <h2>Downforce</h2>
+      <span class="chips"><i>4 pilotos</i><i>5 faixas</i><i>3 voltas</i></span>
+      <p>Corrida em circuito fechado contra o Tomas, o Duarte e a Sira. Desvia-te do trânsito e ultrapassa-os.</p>
+      <span class="guardado" id="res-downforce"></span>
+      <span class="jogar">Jogar ›</span>
+    </span>
+  </a>
+
+  <a class="jogo superpilotos-t" href="superpilotos.html">
+    <span class="leque" aria-hidden="true">
+      <svg class="pista-mini" viewBox="0 0 200 120">
+        <path d="M0 0h200v44H0z" fill="#8fc4ea"/><path d="M0 0h200v20H0z" fill="#2a6fb8" opacity=".7"/>
+        <circle cx="46" cy="18" r="9" fill="#fff6c9"/>
+        <path d="M0 44h200v76H0z" fill="#4a9143"/>
+        <path d="M100 44 196 120H4z" fill="#f1ead2"/>
+        <path d="M100 44 186 120H14z" fill="#3c3f48"/>
+        <path d="M94 60l-10 22M78 94l-12 26M100 60v22M100 94v26M106 60l10 22M122 94l12 26" stroke="#f1ead2" stroke-width="2"/>
+        <path d="M84 70l3-6 6-3 6 2 3 7z" fill="#878c96"/><path d="M87 64l6-3 6 2-4 4z" fill="#b4b9c2"/>
+        <ellipse cx="128" cy="86" rx="13" ry="4" fill="#5db4ea"/>
+        <path d="M108 44 80 104" stroke="#5af0ff" stroke-width="2.5" stroke-linecap="round" opacity=".9"/>
+        <g transform="translate(116 62) scale(.6)"><rect x="-9" y="-11" width="18" height="6" rx="2" fill="#ff5fa8"/><rect x="-11" y="-6" width="22" height="8" rx="2" fill="#ff5fa8"/><rect x="-7" y="-10" width="14" height="4" fill="#1a2634"/><ellipse cx="0" cy="-2" rx="4" ry="3" fill="#fff"/></g>
+        <g transform="translate(138 106) scale(1.5)"><rect x="-9" y="-11" width="18" height="6" rx="2" fill="#ff5fa8"/><rect x="-11" y="-6" width="22" height="8" rx="2" fill="#ff5fa8"/><rect x="-7" y="-10" width="14" height="4" fill="#1a2634"/><ellipse cx="0" cy="-2" rx="4.500" ry="3" fill="#fff"/><text x="0" y="-.2" font-size="5" font-weight="900" text-anchor="middle" fill="#12151c" font-family="system-ui, sans-serif">9</text></g>
+        <g transform="translate(74 116) scale(2)"><rect x="-9" y="-11" width="18" height="6" rx="2" fill="#2f7bff"/><rect x="-11" y="-6" width="22" height="8" rx="2" fill="#2f7bff"/><rect x="-7" y="-10" width="14" height="4" fill="#1a2634"/><ellipse cx="0" cy="-2" rx="4.500" ry="3" fill="#fff"/><text x="0" y="-.2" font-size="5" font-weight="900" text-anchor="middle" fill="#12151c" font-family="system-ui, sans-serif">23</text></g>
+      </svg>
+    </span>
+    <span class="info">
+      <h2>Super Pilotos <small>by Noah</small></h2>
+      <span class="chips"><i>12 pilotos</i><i>lasers</i><i>3 voltas</i></span>
+      <p>Meninos contra Meninas numa pista com pedras, poças, troncos, saltos e animais. Dispara o laser e não fiques sem gasolina.</p>
+      <span class="guardado" id="res-superpilotos"></span>
+      <span class="jogar">Jogar ›</span>
+    </span>
+  </a>
+</div>
+
 </main>
 
-<footer class="rodape">Sem anúncios · funciona sem internet · cartas de Byron Knoll (domínio público)</footer>
+<footer class="rodape">Sem anúncios · funciona sem internet · cartas de Byron Knoll (domínio público) e baralha espanhola de Basquetteur (CC BY-SA 3.0)</footer>
 
 <script>
   // Mostra o resultado guardado de cada jogo, se houver um a decorrer.
@@ -87,8 +215,20 @@
     const d = guardado(chave);
     if (d && Array.isArray(d.jogos) && d.jogos[0] + d.jogos[1] > 0) mostrar(id, `${a} ${d.jogos[0] | 0} – ${d.jogos[1] | 0} ${b}`);
   }
+  const cinq = guardado('cinquillo-v1');
+  if (cinq && Array.isArray(cinq.vitorias) && cinq.vitorias.some((v) => v > 0)) mostrar('res-cinquillo', `tens ${cinq.vitorias[0] | 0} ${cinq.vitorias[0] === 1 ? 'ronda ganha' : 'rondas ganhas'}`);
   const copas = guardado('copas-v1');
   if (copas && Array.isArray(copas.totais) && copas.ronda > 0) mostrar('res-copas', `ronda ${(copas.ronda | 0) + 1} · tens ${copas.totais[0] | 0} pontos`);
+  const recordes = Object.values((guardado('rally-v1') || {}).melhor || {}).length;
+  if (recordes) document.getElementById('res-rally').textContent = `Recordes em ${recordes} de 3 circuitos`;
+  const cm = guardado('contramao-v1');
+  if (cm && cm.metros > 0) document.getElementById('res-contramao').textContent = `Recorde: ${cm.metros | 0} m`;
+  const df = guardado('downforce-v1');
+  if (df && df.melhor > 0) document.getElementById('res-downforce').textContent = `Recorde: ${Math.floor(df.melhor / 60)}:${(df.melhor % 60).toFixed(1).padStart(4, '0')}`;
+  const sp = guardado('superpilotos-v1');
+  if (sp && sp.melhor > 0) document.getElementById('res-superpilotos').textContent = `Recorde: ${Math.floor(sp.melhor / 60)}:${(sp.melhor % 60).toFixed(1).padStart(4, '0')}`;
+  const bj = guardado('blackjack-v1');
+  if (bj && Array.isArray(bj.saldos) && bj.ronda > 0) mostrar('res-blackjack', `ronda ${(bj.ronda | 0) + 1} · tens ${bj.saldos[0] | 0} pontos`);
 </script>
 </body>
 </html>

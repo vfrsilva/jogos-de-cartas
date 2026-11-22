@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06170f">
+<title>Super Pilotos by Noah</title>
+<link rel="stylesheet" href="style.css?v=18">
+</head>
+<body class="superpilotos" data-comando="superpilotos">
+
+<header class="barra">
+  <div class="marca"><a class="voltar" href="index.html" aria-label="Voltar à lista de jogos">‹<span class="t-longo"> Jogos</span></a><h1>Super Pilotos<span class="t-longo"> <small>by Noah</small></span></h1></div>
+  <nav class="acoes">
+    <button type="button" id="btn-regras">Regras</button>
+    <button type="button" id="btn-novo"><span class="t-longo">Recomeçar</span><span class="t-curto">Novo</span></button>
+  </nav>
+</header>
+
+<main class="recinto">
+  <canvas id="tela" aria-label="Pista vista de trás do teu carro"></canvas>
+
+  <div class="hud" aria-live="off">
+    <div class="hud-caixa"><span>Volta</span><b id="hud-volta">1/3</b></div>
+    <div class="hud-caixa"><span>Laser</span><b class="lasers" id="hud-laser">⚡12</b></div>
+  </div>
+  <div class="metros" aria-label="Lugar na corrida"><b id="hud-lugar">—</b><small id="hud-tempo">0:00.0</small></div>
+  <div class="hud hud-direita hud-mapa">
+    <canvas class="mapa" id="mapa" aria-label="Mapa do circuito"></canvas>
+    <ol class="hud-ordem" id="hud-ordem" aria-label="Classificação"></ol>
+  </div>
+  <div class="premio" id="hud-premio" aria-label="Prémio guardado"><b id="hud-premio-icone">?</b><span><i id="hud-premio-nome">Sem prémio</i><small>Espaço</small></span></div>
+  <div class="deposito" id="deposito" aria-label="Gasolina"><span>⛽</span><i><b id="deposito-nivel"></b></i></div>
+  <div class="hud-grande" id="hud-grande" aria-live="polite"></div>
+
+  <div class="toques" aria-label="Comandos">
+    <div><button type="button" data-dir="-1" aria-label="Faixa da esquerda">◀</button></div>
+    <div class="mudancas"><button type="button" class="tiro" id="btn-tiro" data-laser="1" aria-label="Disparar o laser">⚡</button></div>
+    <div><button type="button" data-dir="1" aria-label="Faixa da direita">▶</button></div>
+  </div>
+</main>
+
+<dialog id="dlg-fim"></dialog>
+
+<dialog id="dlg-regras">
+  <h2>Regras dos Super Pilotos</h2>
+  <ul>
+    <li>Corrida de <b>3 voltas</b> com <b>12 pilotos</b> numa pista de cinco faixas: os <b>Meninos</b> (carros azuis) contra as <b>Meninas</b> (carros cor-de-rosa). Tu és o <b>Noah</b>, com o <b>número 23</b>. Na primeira corrida partes de trás; depois, cada piloto parte do <b>lugar em que acabou a corrida anterior</b>.</li>
+    <li>O teu carro anda <b>sempre o mais depressa que pode</b>. Tu mudas de faixa com a <b>seta para a esquerda</b> e a <b>seta para a direita</b>. No telemóvel, toca no lado esquerdo ou direito do ecrã.</li>
+    <li>Na pista há obstáculos. <b>Pedras</b>, <b>troncos</b> e <b>animais</b> param o carro; as <b>poças</b> fazem-no abrandar; os <b>saltos</b> põem-no no ar (lá em cima não dá para virar nem disparar) e perde-se um pouco ao aterrar.</li>
+    <li>Cada piloto tem <b>12 lasers</b> para a corrida toda (<b>barra de espaços</b> ou o botão ⚡). O laser desfaz a pedra ou o tronco que estiver à frente, espanta os animais e trava o carro que for atingido. Sem nada à frente, não dispara nem gasta.</li>
+    <li>As <b>caixas surpresa</b> (os cubos coloridos com um «?») dão um <b>turbo</b> 🔥 ou um <b>míssil</b> 🚀. O prémio fica <b>guardado</b> (aparece no canto do ecrã e no botão) até carregares na <b>barra de espaços</b>; enquanto tiveres um guardado, o espaço usa o prémio em vez do laser, e não apanhas outra caixa. Uma caixa apanhada volta a aparecer <b>3 segundos</b> depois, para dar hipótese a outro piloto. O turbo dura mais para quem vai mais atrás; o míssil persegue o piloto que vai à tua frente, acerta-lhe sempre e deixa-o <b>parado uns segundos</b>, como quando acaba a gasolina. <b>Quem vai em primeiro não apanha caixas.</b></li>
+    <li>Se virares contra um carro que vai ao teu lado, <b>empurra-lo</b> para a faixa seguinte. Atrás de outro carro na mesma faixa ficas preso à velocidade dele.</li>
+    <li>A <b>gasolina</b> vai-se gastando. Em cada volta há duas <b>faixas de abastecimento</b> (verdes, com a placa ⛽), uma à esquerda e outra à direita: entra nelas para encher o depósito e sai antes de acabarem. Sem gasolina o carro fica parado uns segundos.</li>
+    <li>No início de cada corrida sorteia-se <b>quem são os pilotos mais fortes</b>: nunca sabes quem vai dar mais luta. No fim, cada lugar dá pontos à equipa.</li>
+  </ul>
+  <form method="dialog"><button class="principal">Fechar</button></form>
+</dialog>
+
+<script src="fim.js?v=18"></script>
+<script src="superpilotos.js?v=18"></script>
+<script src="comando.js?v=18"></script>
+</body>
+</html>

@@ -10,6 +10,12 @@
   --perigo: #ff7b6b;
   --copas: #ff5d73;
   --peixe: #6ee7c5;
+  --cinq: #ffb347;
+  --blackjack: #c7a6ff;
+  --rally: #ffa24a;
+  --contramao: #ff8fb1;
+  --downforce: #ffd23f;
+  --superpilotos: #6fd3ff;
   --carta-fundo: #fffdf8;
   --tom: var(--ouro);
   --serifa: Georgia, "Times New Roman", serif;
@@ -657,12 +663,20 @@ body.painel {
 .jogo:nth-child(2) { animation-delay: .08s; }
 .jogo:nth-child(3) { animation-delay: .16s; }
 .jogo:nth-child(4) { animation-delay: .24s; }
+.jogo:nth-child(5) { animation-delay: .32s; }
+.jogo:nth-child(5) { animation-delay: .32s; }
 @keyframes sobe {
   from { transform: translateY(24px); opacity: 0; }
 }
 .jogo.bisca-t { --tom: var(--nos); }
 .jogo.copas-t { --tom: var(--copas); }
 .jogo.peixinho-t { --tom: var(--peixe); }
+.jogo.cinquillo-t { --tom: var(--cinq); }
+.jogo.blackjack-t { --tom: var(--blackjack); }
+.jogo.rally-t { --tom: var(--rally); }
+.jogo.contramao-t { --tom: var(--contramao); }
+.jogo.downforce-t { --tom: var(--downforce); }
+.jogo.superpilotos-t { --tom: var(--superpilotos); }
 .jogo:hover {
   transform: translateY(-6px);
   border-color: var(--tom);
@@ -696,6 +710,18 @@ body.painel {
   font-weight: 700;
   box-shadow: 0 4px 14px color-mix(in srgb, var(--tom) 40%, transparent);
 }
+.seccao {
+  max-width: 1180px;
+  margin: 34px auto 14px;
+  font: 700 22px/1.2 var(--serifa);
+  letter-spacing: .03em;
+  color: var(--texto);
+}
+.seccao:first-child { margin-top: 0; }
+/* Com poucos jogos, os cartões mantêm a largura dos outros em vez de esticarem. */
+.jogos-lista.poucos { grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); }
+.pista-mini { height: 100%; filter: drop-shadow(0 8px 14px rgba(0, 0, 0, .45)); transition: transform .2s cubic-bezier(.2, 1.2, .4, 1); }
+.jogo:hover .pista-mini { transform: scale(1.06) rotate(-2deg); }
 .rodape { margin-top: 32px; text-align: center; font-size: 12px; color: var(--texto-suave); }
 
 /* ---------- Telemóvel ---------- */
@@ -955,4 +981,482 @@ body.painel {
   .equipa .pontos small { font-size: 15px; }
   .fichas i { min-width: 20px; height: 23px; font-size: 11px; }
   .feitos { min-height: 23px; }
+}
+
+/* ---------- Blackjack ---------- */
+.blackjack { --tom: var(--blackjack); }
+/* A banca fica em cima, numa linha; os três adversários por baixo, lado a lado. */
+.blackjack .mesa { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: auto auto; align-content: space-evenly; }
+.blackjack .lugar { flex-direction: column; gap: 6px; grid-row: 2; min-width: 0; transition: opacity .3s; }
+.blackjack .lugar.banca { flex-direction: row; gap: 12px; grid-column: 1 / -1; grid-row: 1; }
+.blackjack .lugar.fora { opacity: .45; }
+
+.cartas-bj {
+  --cw: clamp(30px, min(7.5dvh, 11vw), 64px);
+  display: flex;
+  justify-content: center;
+  min-height: var(--ch);
+}
+.cartas-bj > * { margin-left: calc(var(--cw) * -0.55); }
+.banca .cartas-bj { --cw: clamp(40px, min(10dvh, 16vw), 84px); min-width: calc(var(--cw) * 1.7); }
+.banca .cartas-bj > * { margin-left: calc(var(--cw) * -0.3); }
+.cartas-bj > :first-child { margin-left: 0; }
+.cartas-bj .costas { box-shadow: 0 6px 14px rgba(0, 0, 0, .4); }
+.cartas-bj .nova, .blackjack .mao .carta.nova {
+  animation: compra .35s ease-out both;
+  animation-delay: calc(var(--i, 0) * 140ms);
+}
+
+/* Etiqueta com o valor da mão (e o resultado, no fim da ronda). */
+.valor {
+  min-height: 1.75em;
+  padding: 2px 11px;
+  border: 1px solid var(--linha);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, .5);
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.valor:empty { visibility: hidden; }
+.valor[hidden], .mao[hidden] { display: none; }
+.valor.bom { border-color: var(--peixe); color: var(--peixe); }
+.valor.mau { border-color: var(--perigo); color: var(--perigo); }
+.valor.ouro { border-color: var(--ouro); color: var(--ouro); box-shadow: 0 0 14px rgba(242, 201, 76, .45); }
+.banca .valor { min-width: 2.6em; text-align: center; }
+
+.blackjack .mao { min-height: calc(var(--ch) * 1.12); }
+.blackjack .eu .valor { margin-top: 6px; }
+.jog .ronda.ganho { color: var(--peixe); font-weight: 700; }
+.jog .ronda.perda { color: var(--perigo); font-weight: 700; }
+
+.bj-controlos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 8px;
+}
+.bj-controlos.apostar { flex-direction: column; gap: 12px; padding: 6px 0 4px; }
+.fichas, .aposta-linha { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
+.aposta-linha { gap: 16px; }
+.aposta-valor { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--texto-suave); }
+.aposta-valor b { margin-left: 6px; font: 700 30px/1 var(--serifa); letter-spacing: 0; color: var(--ouro); font-variant-numeric: tabular-nums; vertical-align: -4px; }
+.ficha {
+  width: 50px;
+  height: 50px;
+  border: 3px dashed rgba(255, 255, 255, .8);
+  border-radius: 50%;
+  background: var(--cor);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .45), inset 0 0 0 3px rgba(0, 0, 0, .18);
+  transition: transform .15s, filter .15s;
+}
+.ficha.f10 { --cor: #2f6fd0; }
+.ficha.f50 { --cor: #c0392b; }
+.ficha.f100 { --cor: #1e8a57; }
+.ficha.f500 { --cor: #6b3fa0; }
+.ficha:hover:not(:disabled) { transform: translateY(-3px); filter: brightness(1.12); }
+.ficha:active:not(:disabled) { transform: scale(.94); }
+.ficha:disabled, .secundario:disabled { opacity: .35; cursor: default; }
+.secundario {
+  padding: 9px 16px;
+  border: 1.5px solid var(--linha);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .08);
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background .15s, border-color .15s, color .15s, transform .15s;
+}
+.secundario:hover:not(:disabled) { border-color: var(--ouro); color: var(--ouro); background: rgba(242, 201, 76, .12); }
+.secundario:active:not(:disabled) { transform: scale(.96); }
+.principal.ficar { background: linear-gradient(180deg, #a5e2ff, #6cbbe8); color: #062233; box-shadow: 0 4px 14px rgba(127, 209, 255, .35), inset 0 1px 0 rgba(255, 255, 255, .5); }
+.principal.ficar:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(127, 209, 255, .45); }
+
+/* Classificação final: os totais têm 4 algarismos. */
+.blackjack .linha { grid-template-columns: 5.2em 3.4em 1fr 3.6em; }
+
+@media (max-width: 620px) {
+  .blackjack .lugar.banca { gap: 8px; }
+  .blackjack .mesa .valor { padding: 2px 8px; font-size: 12px; }
+  .banca .cartas-bj > :not(:first-child) { margin-left: calc(var(--cw) * -0.42); }
+  .blackjack .placar.quatro { gap: 6px 10px; padding: 6px 12px; }
+  .blackjack .jog .total { font-size: 21px; }
+  .bj-controlos { gap: 6px; }
+  .bj-controlos.apostar { gap: 10px; }
+  .bj-controlos .principal { padding: 10px 18px; }
+  .fichas { gap: 5px; flex-wrap: nowrap; }
+  .ficha { width: min(46px, 12vw); height: min(46px, 12vw); font-size: 12px; }
+  .secundario { padding: 9px 10px; font-size: 13px; }
+  .blackjack .linha { grid-template-columns: 4.6em 3.2em 1fr 3.4em; }
+}
+@media (max-width: 400px) {
+  #ronda-txt { display: none; } /* a ronda já aparece no estado, ao apostar */
+}
+
+/* ---------- Rally ---------- */
+.rally { --tom: var(--rally); background: #2c4a25; }
+.rally .barra h1 small { margin-left: 6px; font: 400 14px/1 system-ui, sans-serif; letter-spacing: 0; color: var(--texto-suave); text-shadow: none; }
+.recinto { position: relative; min-height: 0; overflow: hidden; touch-action: none; }
+.recinto canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.hud { position: absolute; top: 10px; left: 10px; display: flex; gap: 6px; pointer-events: none; }
+.hud-caixa, .hud-ordem {
+  border: 1px solid color-mix(in srgb, var(--tom) 45%, transparent);
+  border-radius: 12px;
+  background: rgba(6, 18, 10, .72);
+  backdrop-filter: blur(6px);
+}
+.hud-caixa { display: flex; flex-direction: column; align-items: center; min-width: 58px; padding: 5px 10px 6px; }
+.hud-caixa span { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--texto-suave); }
+.hud-caixa b { font: 700 21px/1.1 var(--serifa); color: var(--tom); font-variant-numeric: tabular-nums; }
+.hud-ordem {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin: 0;
+  padding: 6px 12px 6px 10px;
+  list-style: none;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.hud-ordem li { display: flex; align-items: center; gap: 5px; color: var(--texto-suave); }
+.hud-ordem li.meu { color: var(--texto); font-weight: 700; }
+.hud-ordem i { width: 10px; height: 10px; border: 1px solid rgba(0, 0, 0, .5); border-radius: 3px; }
+
+.hud-grande {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  font: 800 clamp(64px, 18vmin, 150px)/1 var(--serifa);
+  color: var(--ouro);
+  text-shadow: 0 4px 0 rgba(0, 0, 0, .55), 0 0 40px rgba(0, 0, 0, .6);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.hud-grande.frase { top: 24%; font-size: clamp(24px, 6vmin, 46px); }
+.hud-grande.entra { animation: rally-entra .45s cubic-bezier(.2, 1.4, .4, 1) both; }
+@keyframes rally-entra { from { transform: translate(-50%, -50%) scale(1.7); opacity: 0; } }
+
+/* Botões de toque: só em ecrãs táteis. */
+.toques { display: none; position: absolute; inset: auto 0 0 0; justify-content: space-between; padding: 0 14px max(14px, env(safe-area-inset-bottom)); pointer-events: none; }
+.toques div { display: flex; gap: 10px; pointer-events: auto; }
+.toques button {
+  width: 64px;
+  height: 64px;
+  border: 2px solid rgba(255, 255, 255, .55);
+  border-radius: 50%;
+  background: rgba(6, 18, 10, .5);
+  font-size: 24px;
+  touch-action: none;
+  -webkit-touch-callout: none;
+}
+.toques button.ativo { background: color-mix(in srgb, var(--tom) 75%, transparent); border-color: #fff; color: #1b1400; transform: scale(.94); }
+@media (pointer: coarse) { .toques { display: flex; } }
+
+/* Escolha do circuito. */
+#dlg-circuitos { --tom: var(--rally); width: min(560px, calc(100vw - 32px)); }
+.circuitos { display: grid; gap: 10px; margin-bottom: 14px; }
+.circuito {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  border: 1.5px solid var(--linha);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .05);
+  text-align: left;
+  transition: border-color .15s, background .15s, transform .15s;
+}
+.circuito canvas { flex: none; width: 130px; height: 78px; border-radius: 9px; background: #4f7a3a; }
+.circuito span { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.circuito b { font: 700 20px/1.2 var(--serifa); color: var(--tom); }
+.circuito small { font-size: 13px; color: var(--texto-suave); }
+.circuito em { font-size: 12px; font-style: normal; color: var(--texto); }
+.circuito:active { transform: scale(.98); }
+@media (hover: hover) { .circuito:hover { border-color: var(--tom); background: color-mix(in srgb, var(--tom) 12%, transparent); } }
+
+/* Classificação final: a última coluna é um tempo. */
+.rally .linha { grid-template-columns: 4.6em 2.4em 1fr 4.2em; }
+
+@media (max-width: 620px) {
+  .rally .barra h1 small { display: none; }
+  .hud { top: 6px; left: 6px; gap: 4px; }
+  .hud-caixa { min-width: 46px; padding: 4px 7px 5px; border-radius: 10px; }
+  .hud-caixa b { font-size: 16px; }
+  .hud-caixa span { font-size: 9px; }
+  .hud-ordem { top: 6px; right: 6px; padding: 4px 8px; font-size: 11px; }
+  .circuito canvas { width: 96px; height: 58px; }
+  .circuito b { font-size: 18px; }
+}
+.rally .linha .mais.tem { color: var(--ouro); }
+
+/* ---------- Cinquillo (baralha espanhola) ---------- */
+.cinquillo { --tom: var(--cinq); --maoh: 1.75; }
+/* As cartas espanholas são mais altas e já trazem o contorno e os cantos na imagem. */
+.cinquillo *, .carta.es { --ch: calc(var(--cw) * 1.5337); }
+.carta.es {
+  padding: 0;
+  border: 0;
+  border-radius: calc(var(--cw) * 0.07);
+  background: none;
+}
+.cinquillo .costas {
+  border: 0;
+  background: url("baraja/reverso.png") center / 100% 100% no-repeat;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .45);
+}
+
+/* Os três adversários ficam em cima; a mesa é o tabuleiro dos quatro naipes. */
+.cinquillo .mesa { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cinquillo .lugar { position: relative; flex-direction: row; grid-row: 1; }
+.cinquillo .lugar.esquerda { grid-column: 1; }
+.cinquillo .lugar.topo { grid-column: 2; }
+.cinquillo .lugar.direita { grid-column: 3; }
+.aviso {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  z-index: 1;
+  display: none;
+  margin-top: 2px;
+  padding: 1px 10px;
+  border-radius: 999px;
+  background: var(--eles);
+  color: #2a0f06;
+  font-size: 13px;
+  font-weight: 800;
+  transform: translateX(-50%);
+  animation: fala .2s ease-out both;
+}
+.lugar.passou .aviso { display: block; }
+
+.tabuleiro {
+  --cb: min(72px, (100vw - 60px) / 10, (100dvh - 335px - var(--cw) * var(--maoh)) / 6.3);
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  gap: 4px;
+}
+.tab-fila { display: grid; grid-template-columns: repeat(10, var(--cb)); gap: 3px; }
+.tab-topo { color: var(--texto-suave); font-size: 11px; font-weight: 700; text-align: center; }
+.casa {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--cb);
+  height: calc(var(--cb) * 1.5337);
+  padding: 0;
+  border: 1.5px dashed rgba(255, 255, 255, .13);
+  border-radius: calc(var(--cb) * 0.09);
+  background: none;
+  color: rgba(255, 255, 255, .2);
+  font: 700 calc(var(--cb) * 0.36)/1 var(--serifa);
+  cursor: default;
+}
+.casa img { display: block; width: 100%; height: 100%; border-radius: inherit; pointer-events: none; }
+.casa.fantasma img { opacity: .2; filter: grayscale(.7); }
+.casa.posta { border-color: transparent; }
+.casa.posta img { --de: 0, -35%; animation: entra .3s cubic-bezier(.2, 1.2, .4, 1) both; box-shadow: 0 2px 6px rgba(0, 0, 0, .4); }
+.casa.aberta { border-color: color-mix(in srgb, var(--tom) 60%, transparent); color: var(--tom); }
+/* Casas onde podes jogar agora. */
+.casa.minha {
+  border: 2px solid var(--ouro);
+  color: var(--ouro);
+  cursor: pointer;
+  animation: pulsa 1.4s ease-in-out infinite;
+}
+.casa.minha.fantasma img { opacity: .45; filter: none; }
+/* «recente» e não «ultima»: essa classe já é do diálogo da última vaza. */
+.casa.recente img { box-shadow: 0 0 0 2px var(--ouro), 0 0 14px rgba(242, 201, 76, .8); }
+
+.cinquillo .eu .principal { margin: 6px 0 8px; padding: 7px 22px; animation: pulsa 1.4s ease-in-out infinite; }
+
+@media (max-width: 620px) {
+  body.cinquillo { --cw: clamp(40px, min(17vw, (100dvh - 470px) * 0.33), 84px); --maoh: 2.75; }
+  .tabuleiro { --cb: min((100vw - 48px) / 10, (100dvh - 325px - var(--cw) * var(--maoh)) / 6.3); }
+  .tab-fila { gap: 2px; }
+  .tab-topo { font-size: 10px; }
+  .aviso { font-size: 12px; }
+}
+
+/* ---------- Contramão ---------- */
+.contramao { --tom: var(--contramao); background: #1d2b53; }
+.contramao .recinto canvas { cursor: pointer; }
+.hud.hud-direita { left: auto; right: 10px; }
+/* Contador de metros, ao centro em cima. */
+.metros {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, .55), 0 0 14px rgba(0, 0, 0, .6);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.metros b { font: 800 34px/1.05 var(--serifa); color: var(--ouro); font-variant-numeric: tabular-nums; }
+.metros small { font-size: 12px; color: var(--texto); }
+.hud-caixa .vidas { font-family: system-ui, sans-serif; font-size: 18px; line-height: 1.3; letter-spacing: .08em; color: var(--copas); }
+.contramao .hud-grande.frase { top: 20%; white-space: normal; width: 90%; text-align: center; text-wrap: balance; }
+.contramao .toques button { width: 72px; height: 72px; }
+.contramao .toques { align-items: flex-end; }
+.contramao .toques .mudancas button { width: 52px; height: 52px; font-size: 19px; }
+.contramao .toques .mudancas { gap: 8px; }
+.contramao .toques .mudancas .tiro { border-color: #5af0ff; color: #5af0ff; }
+.hud-caixa .lasers { font-family: system-ui, sans-serif; font-size: 16px; line-height: 1.45; color: #5af0ff; }
+.contramao .linha { grid-template-columns: 5em 0 1fr 3em; }
+.deposito {
+  position: absolute;
+  top: 70px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: min(230px, calc(100% - 20px));
+  padding: 4px 9px 4px 6px;
+  border: 1px solid color-mix(in srgb, var(--tom) 45%, transparent);
+  border-radius: 999px;
+  background: rgba(6, 18, 10, .72);
+  font-size: 14px;
+  line-height: 1;
+  pointer-events: none;
+}
+.deposito i { flex: 1; height: 9px; border-radius: 999px; background: rgba(255, 255, 255, .14); overflow: hidden; }
+.deposito b { display: block; height: 100%; border-radius: 999px; background: var(--ouro); transition: width .25s linear, background .2s; }
+.deposito.baixo { border-color: var(--perigo); animation: pulsa-deposito .6s ease-in-out infinite alternate; }
+.deposito.baixo b { background: var(--perigo); }
+.deposito.carrega { border-color: var(--peixe); box-shadow: 0 0 16px rgba(110, 231, 197, .5); }
+.deposito.carrega b { background: var(--peixe); }
+@keyframes pulsa-deposito { to { box-shadow: 0 0 16px rgba(255, 123, 107, .7); } }
+@media (max-width: 620px) {
+  .deposito { top: 52px; left: 6px; width: min(190px, calc(100% - 12px)); }
+  .hud.hud-direita { right: 6px; }
+  .metros { top: 5px; }
+  .metros b { font-size: 22px; }
+  .metros small { font-size: 10px; }
+  .hud-caixa .vidas { font-size: 14px; }
+  .hud-caixa .lasers { font-size: 12px; line-height: 1.5; }
+  .contramao .hud-caixa { min-width: 0; padding: 4px 5px 5px; }
+}
+
+/* ---------- Downforce ---------- */
+.downforce { --tom: var(--downforce); background: #2a6fb8; }
+.downforce .recinto canvas#tela { cursor: pointer; }
+.downforce .metros b { font-size: 40px; }
+.downforce .hud-grande.frase { top: 22%; }
+.downforce .toques { align-items: flex-end; }
+.downforce .toques button { width: 72px; height: 72px; }
+.downforce .toques .mudancas { gap: 8px; }
+.downforce .toques .mudancas button { width: 52px; height: 52px; font-size: 19px; }
+.downforce .linha { grid-template-columns: 4.6em 2.4em 1fr 4.2em; }
+.downforce .linha .mais.tem { color: var(--ouro); }
+/* Mapa do circuito e classificação, em cima à direita. */
+.hud.hud-mapa { flex-direction: column; align-items: flex-end; }
+.recinto canvas.mapa {
+  position: static;
+  width: 150px;
+  height: 92px;
+  border: 1px solid color-mix(in srgb, var(--tom) 45%, transparent);
+  border-radius: 12px;
+  background: rgba(6, 18, 10, .6);
+}
+.hud-mapa .hud-ordem { position: static; }
+@media (max-width: 620px) {
+  .downforce .metros b { font-size: 26px; }
+  .downforce .hud-caixa { min-width: 0; padding: 4px 5px 5px; }
+  .downforce .hud > .hud-caixa:nth-child(3) { display: none; } /* os km/h não cabem ao lado do lugar */
+  .recinto canvas.mapa { width: 96px; height: 60px; border-radius: 10px; }
+  .hud-mapa .hud-ordem { padding: 3px 7px; font-size: 10px; }
+}
+
+/* ---------- Super Pilotos by Noah ---------- */
+.superpilotos { --tom: var(--superpilotos); background: #2a6fb8; }
+.superpilotos .barra h1 small { font: 400 14px/1 system-ui, sans-serif; letter-spacing: 0; color: var(--texto-suave); text-shadow: none; }
+.superpilotos .recinto canvas#tela { cursor: pointer; }
+.superpilotos .metros b { font-size: 40px; }
+.superpilotos .hud-grande.frase { top: 22%; white-space: normal; width: 90%; text-align: center; text-wrap: balance; }
+.superpilotos .toques { align-items: flex-end; }
+.superpilotos .toques button { width: 72px; height: 72px; }
+.superpilotos .toques .mudancas .tiro { border-color: #5af0ff; color: #5af0ff; }
+/* Classificação final com 12 pilotos: linhas mais baixas, para caber tudo. */
+/* Prémio da caixa surpresa, guardado até se carregar no espaço. */
+.superpilotos .premio {
+  position: absolute; top: 102px; left: 10px;
+  display: flex; align-items: center; gap: 8px;
+  padding: 4px 12px 4px 4px;
+  border: 1px dashed color-mix(in srgb, var(--tom) 45%, transparent);
+  border-radius: 999px;
+  background: rgba(6, 18, 10, .72);
+  pointer-events: none;
+  opacity: .55;
+}
+.superpilotos .premio > b { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, .1); font: 700 22px/1 system-ui, sans-serif; color: var(--texto-suave); }
+.superpilotos .premio span { display: flex; flex-direction: column; gap: 2px; }
+.superpilotos .premio i { font: 700 13px/1 system-ui, sans-serif; color: var(--texto-suave); }
+.superpilotos .premio small { display: none; font: 700 10px/1 system-ui, sans-serif; text-transform: uppercase; letter-spacing: .1em; color: #fff; }
+.superpilotos .premio.tem { --brilho: #ffb02e; opacity: 1; border: 2px solid var(--brilho); animation: pulsa-premio .55s ease-in-out infinite alternate; }
+.superpilotos .premio.tem.missil { --brilho: #ff5a4d; }
+.superpilotos .premio.tem > b { font-size: 26px; background: color-mix(in srgb, var(--brilho) 30%, transparent); }
+.superpilotos .premio.tem i { font-size: 15px; color: #fff; }
+.superpilotos .premio.tem small { display: block; color: var(--brilho); }
+@media (pointer: coarse) { .superpilotos .premio.tem small { display: none; } }
+.superpilotos .toques .mudancas .tiro.carregado { border-color: #ffb02e; background: rgba(255, 176, 46, .3); font-size: 34px; animation: pulsa-premio .55s ease-in-out infinite alternate; --brilho: #ffb02e; }
+@keyframes pulsa-premio { from { box-shadow: 0 0 4px var(--brilho); } to { box-shadow: 0 0 22px var(--brilho); transform: scale(1.06); } }
+.superpilotos .fim-tabela { gap: 3px; }
+.superpilotos .linha { grid-template-columns: 6.4em 2.4em 1fr 3.8em; padding: 3px 10px; font-size: 14px; }
+.superpilotos .linha .total { font-size: 16px; }
+.superpilotos .linha .mais.tem { color: var(--ouro); }
+.superpilotos .fim-icone { font-size: 48px; }
+.superpilotos .fim-corpo { gap: 6px; }
+@media (max-width: 620px) {
+  .superpilotos .metros b { font-size: 26px; }
+  .superpilotos .premio { top: 78px; left: 6px; padding: 3px 10px 3px 3px; }
+  .superpilotos .premio > b { width: 32px; height: 32px; font-size: 18px; }
+  .superpilotos .premio.tem > b { font-size: 21px; }
+  .superpilotos .hud-caixa { min-width: 0; padding: 4px 5px 5px; }
+  .superpilotos .hud-caixa .lasers { font-size: 14px; line-height: 1.3; }
+  .superpilotos .linha { grid-template-columns: 5.8em 2.2em 1fr 3.6em; padding: 2px 8px; font-size: 13px; }
+  .superpilotos .linha .total { font-size: 14px; }
+  .superpilotos .fim-icone { font-size: 40px; }
+}
+
+/* ---------- Aviso do comando de jogos ---------- */
+.comando-aviso {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  padding: 8px 16px;
+  border: 1px solid var(--linha);
+  border-radius: 999px;
+  background: rgba(6, 18, 10, .88);
+  font-size: 14px;
+  font-weight: 700;
+  z-index: 50;
+  pointer-events: none;
+  animation: sobe .3s ease-out both;
+}
+
+/* Escolha do veículo (Contramão): três cartões lado a lado. */
+#dlg-veiculos { --tom: var(--contramao); width: min(600px, calc(100vw - 32px)); }
+.veiculos { grid-template-columns: repeat(3, 1fr); }
+.veiculos .circuito { flex-direction: column; gap: 8px; padding: 10px 8px 12px; text-align: center; }
+.veiculos .circuito canvas { width: 100%; height: auto; aspect-ratio: 11 / 8; background: linear-gradient(#8a4b78, #3c3f48 62%); }
+.veiculos .circuito span { align-items: center; }
+.veiculos .circuito.atual { border-color: var(--tom); }
+@media (max-width: 620px) {
+  .veiculos .circuito b { font-size: 15px; }
+  .veiculos .circuito small { font-size: 11px; }
 }

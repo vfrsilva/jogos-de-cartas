@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06170f">
+<title>Downforce</title>
+<link rel="stylesheet" href="style.css?v=18">
+</head>
+<body class="downforce" data-comando="downforce">
+
+<header class="barra">
+  <div class="marca"><a class="voltar" href="index.html" aria-label="Voltar à lista de jogos">‹<span class="t-longo"> Jogos</span></a><h1>Downforce</h1></div>
+  <nav class="acoes">
+    <button type="button" id="btn-regras">Regras</button>
+    <button type="button" id="btn-novo"><span class="t-longo">Recomeçar</span><span class="t-curto">Novo</span></button>
+  </nav>
+</header>
+
+<main class="recinto">
+  <canvas id="tela" aria-label="Pista vista de trás do teu carro"></canvas>
+
+  <div class="hud" aria-live="off">
+    <div class="hud-caixa"><span>Volta</span><b id="hud-volta">1/3</b></div>
+    <div class="hud-caixa"><span>Mudança</span><b id="hud-mudanca">5.ª</b></div>
+    <div class="hud-caixa"><span>km/h</span><b id="hud-vel">0</b></div>
+  </div>
+  <div class="metros" aria-label="Lugar na corrida"><b id="hud-lugar">—</b><small id="hud-tempo">0:00.0</small></div>
+  <div class="hud hud-direita hud-mapa">
+    <canvas class="mapa" id="mapa" aria-label="Mapa do circuito"></canvas>
+    <ol class="hud-ordem" id="hud-ordem" aria-label="Classificação"></ol>
+  </div>
+  <div class="hud-grande" id="hud-grande" aria-live="polite"></div>
+
+  <div class="toques" aria-label="Comandos">
+    <div><button type="button" data-dir="-1" aria-label="Faixa da esquerda">◀</button></div>
+    <div class="mudancas"><button type="button" data-mud="-1" aria-label="Mais devagar">▼</button><button type="button" data-mud="1" aria-label="Mais depressa">▲</button></div>
+    <div><button type="button" data-dir="1" aria-label="Faixa da direita">▶</button></div>
+  </div>
+</main>
+
+<dialog id="dlg-fim"></dialog>
+
+<dialog id="dlg-regras">
+  <h2>Regras do Downforce</h2>
+  <ul>
+    <li>Corrida de <b>3 voltas</b> num circuito fechado de cinco faixas, contra o <b>Tomas</b>, o <b>Duarte</b> e a <b>Sira</b>. Ganha quem cortar a meta primeiro. Tu és o <b>carro vermelho</b> e partes de trás.</li>
+    <li>O teu carro <b>anda sozinho</b>. Tu mudas de faixa com a <b>seta para a esquerda</b> e a <b>seta para a direita</b>. No telemóvel, toca no lado esquerdo ou direito do ecrã.</li>
+    <li>Começas em <b>5.ª</b>. A <b>seta para baixo</b> e a <b>seta para cima</b> metem a mudança abaixo ou acima (da 1.ª à 5.ª).</li>
+    <li>Na pista há <b>carros lentos</b> (os que não têm nome por cima): desvia-te deles. Se bateres num, o teu carro para e perdes uns segundos a recuperar a velocidade.</li>
+    <li>Atrás de um adversário na mesma faixa ficas <b>preso à velocidade dele</b>: muda de faixa para o ultrapassar. Com um carro mesmo ao lado não dá para mudar para essa faixa.</li>
+    <li>O <b>mapa</b>, em cima à direita, mostra o circuito e onde vai cada piloto. Cada vez que passas na meta começa uma volta nova.</li>
+  </ul>
+  <form method="dialog"><button class="principal">Fechar</button></form>
+</dialog>
+
+<script src="fim.js?v=18"></script>
+<script src="downforce.js?v=18"></script>
+<script src="comando.js?v=18"></script>
+</body>
+</html>
