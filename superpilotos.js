@@ -26,6 +26,7 @@ const LASERS = 12;        // disparos de cada piloto para a corrida toda
 const ALCANCE_LASER = 10; // passos
 const ESP_FILAS = 5;      // passos entre filas de obstáculos
 const TEMPO_AR = 0.9;     // segundos no ar depois de um salto
+const TURBO_SALTO = 1.3;  // segundos de turbo ao aterrar de uma rampa
 // Gasolina (0–100): gasta-se por passo andado e recarrega nas faixas de abastecimento.
 const CONSUMO = 0.42;
 const CARGA = 8;
@@ -334,9 +335,9 @@ function pilotar(c) {
   }
   let f = livre(c, c.faixa, alvo);
   if (f.o && f.o !== c.visto) {
-    // Obstáculo novo à frente: às vezes o piloto distrai-se e não o vê (os saltos, muitas vezes).
+    // Obstáculo novo à frente: às vezes o piloto distrai-se e não o vê. As rampas dão turbo, por isso quase todos as aproveitam.
     c.visto = f.o;
-    c.ignora = Math.random() > (f.o.tipo === 'salto' ? 0.5 : c.atencao) ? f.o : null;
+    c.ignora = Math.random() > (f.o.tipo === 'salto' ? 0.1 : c.atencao) ? f.o : null;
     if (c.ignora) f = livre(c, c.faixa, alvo);
   }
   const dist = serie(FAIXAS).map((k) => (k === c.faixa ? f : livre(c, k, alvo)));
@@ -390,7 +391,7 @@ function passoCarro(c, alvo) {
   let anda = c.v * DT;
   if (c.ar > 0) {
     c.ar -= DT;
-    if (c.ar <= 0) { c.v *= 0.8; S.eventos.push({ tipo: 'aterra', id: c.id }); } // a aterragem custa um pouco
+    if (c.ar <= 0) { c.turbo = Math.max(c.turbo, TURBO_SALTO); S.eventos.push({ tipo: 'aterra', id: c.id }); } // a rampa dá balanço: aterra com turbo
   } else {
     // Atrás de outro carro na mesma faixa não se passa por cima: fica-se colado até mudar de faixa.
     for (const o of S.carros) {
@@ -1165,6 +1166,7 @@ if (typeof document !== 'undefined') (() => {
       if (e.tipo === 'choque') { clarao = 1; corClarao = '255, 80, 60'; navigator.vibrate?.(120); avisar(VOZES[e.com] || 'Bateste!', 1); }
       else if (e.tipo === 'poca') { clarao = 0.8; corClarao = '90, 170, 240'; navigator.vibrate?.(60); avisar('Splash!', 0.9); }
       else if (e.tipo === 'salto') avisar('Iuupi!', 0.8);
+      else if (e.tipo === 'aterra') avisar('🔥 Turbo!', 0.8);
       else if (e.tipo === 'caixa') { navigator.vibrate?.(40); avisar(e.item === 'missil' ? '🚀 Tens um míssil!' : '🔥 Tens um turbo!', 1.3); }
       else if (e.tipo === 'premio') { navigator.vibrate?.(40); avisar(e.item === 'missil' ? '🚀 Lá vai!' : '🔥 Turbo!', 0.9); }
       else if (e.tipo === 'seco') { clarao = 0.6; corClarao = '255, 80, 60'; avisar('Sem gasolina!', 2.2); }
